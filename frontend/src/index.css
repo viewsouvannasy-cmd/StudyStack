@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --font-ui: Inter, system-ui, sans-serif;
+  --font-reading: "Source Serif 4", Georgia, serif;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-ui);
+}
