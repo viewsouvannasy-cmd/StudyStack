@@ -3,6 +3,86 @@
 @theme {
   --font-ui: Inter, system-ui, sans-serif;
   --font-reading: "Source Serif 4", Georgia, serif;
+
+  /* Mobile-first defaults */
+  --text-display: 32px;
+  --text-page-title: 26px;
+  --text-section: 20px;
+  --text-subsection: 18px;
+  --text-large-body: 17px;
+  --text-body: 16px;
+  --text-small: 14px;
+  --text-label: 13px;
+  --text-caption: 12px;
+
+  --text-reading-title: 24px;
+  --text-reading-heading: 20px;
+  --text-reading-large: 19px;
+  --text-reading-body: 17px;
+  --text-reading-small: 16px;
+}
+
+:root {
+  /* Surfaces */
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5f5f5;
+  --color-surface-subtle: #fafafa;
+  --color-background-inverse: #111111;
+
+  /* Text */
+  --color-text-primary: #111111;
+  --color-text-secondary: #525252;
+  --color-text-muted: #737373;
+  --color-text-inverse: #ffffff;
+
+  /* Borders and interaction */
+  --color-border: #e5e5e5;
+  --color-border-strong: #d4d4d4;
+  --color-focus-ring: #818cf8;
+
+  /* Primary blue */
+  --color-primary: #2c7aff;
+  --color-primary-hover: #1768e8;
+  --color-primary-soft: #eef5ff;
+  --color-primary-text: #1558c7;
+
+  /* Validation and status */
+  --color-success-background: #ecfdf3;
+  --color-success-text: #087443;
+  --color-warning-background: #fffaeb;
+  --color-warning-text: #b54708;
+  --color-error-background: #fef3f2;
+  --color-error-text: #b42318;
+  --color-info-background: #eef2ff;
+  --color-info-text: #3730a3;
+
+  /* Overlay, glass, and shadows */
+  --color-overlay: rgba(17, 17, 17, 0.45);
+  --color-glass-background: rgba(255, 255, 255, 0.78);
+  --color-glass-border: rgba(255, 255, 255, 0.65);
+  --blur-glass: 16px;
+  --shadow-card: 0 2px 8px rgba(17, 17, 17, 0.06);
+  --shadow-floating: 0 12px 32px rgba(17, 17, 17, 0.12);
+}
+
+[data-theme="dark"] {
+  --color-background: #111111;
+  --color-surface: #1a1a1a;
+  --color-surface-muted: #242424;
+  --color-surface-subtle: #202020;
+  --color-background-inverse: #ffffff;
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #d4d4d4;
+  --color-text-muted: #a3a3a3;
+  --color-text-inverse: #111111;
+
+  --color-border: #333333;
+  --color-border-strong: #525252;
+
+  --color-glass-background: rgba(26, 26, 26, 0.78);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
 }
 
 *,
@@ -13,4 +93,21 @@
 
 body {
   font-family: var(--font-ui);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+@media (min-width: 768px) {
+  :root {
+    /* Tablet and desktop enhancements */
+    --text-display: 40px;
+    --text-page-title: 32px;
+    --text-section: 24px;
+    --text-subsection: 20px;
+    --text-large-body: 18px;
+    --text-reading-title: 30px;
+    --text-reading-heading: 24px;
+    --text-reading-large: 21px;
+    --text-reading-body: 18px;
+  }
 }

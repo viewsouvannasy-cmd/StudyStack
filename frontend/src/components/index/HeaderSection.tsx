@@ -2,7 +2,7 @@
 import { Link } from "@tanstack/react-router";
 
 // component
-import { FullLogo } from "../FullLogo";
+import { FullLogo } from "../logo/FullLogo";
 
 export function HeaderSection() {
   return (
@@ -10,13 +10,13 @@ export function HeaderSection() {
       <FullLogo />
       <div className="flex items-center gap-4">
         <Link
-          className="cursor-pointer border p-1 pr-4 pl-4 text-[14px] md:text-[16px]"
+          className="text-small cursor-pointer border border-(--color-background-inverse) p-1 pr-4 pl-4 transition-all duration-200 hover:bg-(--color-background-inverse) hover:text-(--color-background)"
           to="/login"
         >
           Log in
         </Link>
         <Link
-          className="cursor-pointer border border-neutral-900 bg-black p-1 pr-4 pl-4 text-[14px] text-white md:text-[16px]"
+          className="text-small cursor-pointer border border-neutral-900 bg-(--color-background-inverse) p-1 pr-4 pl-4 text-(--color-text-inverse)"
           to="/signup"
         >
           Sign up
