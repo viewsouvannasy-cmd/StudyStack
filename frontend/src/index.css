@@ -39,7 +39,7 @@
   /* Borders and interaction */
   --color-border: #e5e5e5;
   --color-border-strong: #d4d4d4;
-  --color-focus-ring: #818cf8;
+  --color-focus-ring: #2c7aff;
 
   /* Primary blue */
   --color-primary: #2c7aff;
@@ -110,4 +110,17 @@ body {
     --text-reading-large: 21px;
     --text-reading-body: 18px;
   }
+}
+
+/* auth route */
+.input-form-auth {
+  @apply text-small border p-2 focus:outline-(--color-primary);
+}
+
+.btn-form-auth {
+  @apply text-small mt-5 cursor-pointer bg-(--color-primary) p-2.5 text-(--color-text-inverse) transition-colors duration-200 hover:bg-(--color-primary-hover);
+}
+
+.btn-resgiter-oauth {
+  @apply text-small flex cursor-pointer items-center justify-center gap-2 rounded-full border border-(--color-border-strong) bg-(--color-background) p-3 text-(--color-text) hover:bg-(--color-info-background);
 }

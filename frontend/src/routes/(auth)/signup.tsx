@@ -1,11 +1,15 @@
 // library
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 
 // component
 import { Logo } from "../../components/logo/Logo";
+import { IconEye } from "../../components/icon/IconEye";
 
 const SignUpPage = () => {
+  const [isShowPassword, setIsShowPassword] = useState(false);
+
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center p-4">
       <div className="flex w-full max-w-90 flex-col gap-5">
@@ -13,38 +17,45 @@ const SignUpPage = () => {
           <Logo />
           <h1 className="text-section font-medium">Sign up to StudyStack</h1>
         </div>
-        <div className="flex w-full flex-col">
+        <form className="flex w-full flex-col">
           <div className="flex w-full flex-col gap-1">
             <label className="text-small">Email</label>
-            <input className="text-small border p-2" type="email" />
+            <input className="input-form-auth" type="email" required />
           </div>
           <div className="mt-3.5 flex w-full flex-col gap-1">
             <label className="text-small">Username</label>
             <input
-              className="text-small border p-2"
+              className="input-form-auth"
               type="text"
               minLength={3}
               maxLength={50}
+              required
             />
           </div>
-          <div className="mt-3.5 flex w-full flex-col gap-1">
+          <div className="relative mt-3.5 flex w-full flex-col gap-1 [&>button]:absolute [&>button]:top-[57%] [&>button]:right-3 [&>button]:hidden focus-within:[&>button]:flex">
             <label className="text-small">Password</label>
             <input
-              className="text-small border p-2"
+              className="input-form-auth"
+              type={isShowPassword ? "text" : "password"}
               minLength={8}
               maxLength={50}
+              required
             />
+            <button type="button">
+              <IconEye
+                isShowPassword={isShowPassword}
+                onClick={() => setIsShowPassword(!isShowPassword)}
+              />
+            </button>
           </div>
-          <button className="text-small mt-5 cursor-pointer bg-(--color-primary) p-2.5 text-(--color-text-inverse) transition-colors duration-200 hover:bg-(--color-primary-hover)">
-            Create account
-          </button>
-        </div>
+          <button className="btn-form-auth">Create account</button>
+        </form>
         <div className="flex items-center gap-3">
           <div className="h-px w-full bg-(--color-background-inverse)"></div>
           <span className="text-[11px]">OR</span>
           <div className="h-px w-full bg-(--color-background-inverse)"></div>
         </div>
-        <button className="text-small flex cursor-pointer items-center justify-center gap-2 rounded-full border border-(--color-border-strong) bg-(--color-background) p-3 text-(--color-text) hover:bg-(--color-info-background)">
+        <button type="submit" className="btn-resgiter-oauth">
           <img className="h-5 w-5" src="/google-icon.svg" />
           Continue with Google
         </button>
