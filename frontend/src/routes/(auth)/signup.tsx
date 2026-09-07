@@ -7,7 +7,11 @@ import { useState } from "react";
 import { Logo } from "../../components/logo/Logo";
 import { IconEye } from "../../components/icon/IconEye";
 
-const SignUpPage = () => {
+export const Route = createFileRoute("/(auth)/signup")({
+  component: SignUpPage,
+});
+
+function SignUpPage() {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   return (
@@ -71,8 +75,4 @@ const SignUpPage = () => {
       </div>
     </div>
   );
-};
-
-export const Route = createFileRoute("/(auth)/signup")({
-  component: SignUpPage,
-});
+}
