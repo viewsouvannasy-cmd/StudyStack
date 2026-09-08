@@ -22,7 +22,7 @@ function RouteComponent() {
       <div className="flex w-full max-w-90 flex-col gap-5">
         <div className="flex w-full max-w-100 flex-col items-center justify-center gap-2">
           <Logo />
-          <h1 className="text-section font-medium">Log in to StudyStack</h1>
+          <h1 className="text-[20px] font-medium">Log in to StudyStack</h1>
         </div>
         <form className="flex w-full flex-col">
           <div className="flex w-full flex-col gap-1">

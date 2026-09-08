@@ -6,6 +6,12 @@ import { useState } from "react";
 // component
 import { Logo } from "../../components/logo/Logo";
 import { IconEye } from "../../components/icon/IconEye";
+import { SipnnerLoad } from "../../components/loading-state/SipnnerLoad";
+
+// api
+import { useSignup } from "../../api/auth/auth";
+
+import type { ResponseStatus } from "../../types/auth-type";
 
 export const Route = createFileRoute("/(auth)/signup")({
   component: SignUpPage,
@@ -14,35 +20,87 @@ export const Route = createFileRoute("/(auth)/signup")({
 function SignUpPage() {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
+  // form state
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputName, setInputName] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
+
+  const [resultResponse, setResultReponse] = useState<ResponseStatus>();
+
+  const { mutate, isPending } = useSignup();
+
+  const handleSubmitSignup = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutate(
+      {
+        user_email: inputEmail,
+        user_name: inputName,
+        user_password: inputPassword,
+      },
+      {
+        onSuccess: (response) => {
+          console.log(response);
+        },
+        onError: (error) => {
+          if (error.response) {
+            setResultReponse(error.response.data);
+          }
+        },
+      },
+    );
+  };
+
+  console.log(resultResponse);
+
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center p-4">
       <div className="flex w-full max-w-90 flex-col gap-5">
         <div className="flex w-full max-w-100 flex-col items-center justify-center gap-2">
           <Logo />
-          <h1 className="text-section font-medium">Sign up to StudyStack</h1>
+          <h1 className="text-[20px] font-medium">Sign up to StudyStack</h1>
         </div>
-        <form className="flex w-full flex-col">
+        <form onSubmit={handleSubmitSignup} className="flex w-full flex-col">
           <div className="flex w-full flex-col gap-1">
             <label className="text-small">Email</label>
-            <input className="input-form-auth" type="email" required />
+            <input
+              className={`input-form-auth ${resultResponse?.point === "email" ? "border-(--color-error-text)" : ""}`}
+              type="email"
+              onChange={(e) => setInputEmail(e.target.value)}
+              value={inputEmail}
+              required
+            />
+            {resultResponse?.point === "email" && (
+              <span className="text-caption text-(--color-error-text)">
+                {resultResponse.msg}
+              </span>
+            )}
           </div>
           <div className="mt-3.5 flex w-full flex-col gap-1">
             <label className="text-small">Username</label>
             <input
-              className="input-form-auth"
+              className={`input-form-auth ${resultResponse?.point === "name" ? "border-(--color-error-text)" : ""}`}
               type="text"
               minLength={3}
               maxLength={50}
+              onChange={(e) => setInputName(e.target.value)}
+              value={inputName}
               required
             />
+            {resultResponse?.point === "name" && (
+              <span className="text-caption text-(--color-error-text)">
+                {resultResponse.msg}
+              </span>
+            )}
           </div>
           <div className="relative mt-3.5 flex w-full flex-col gap-1 [&>button]:absolute [&>button]:top-[57%] [&>button]:right-3 [&>button]:hidden focus-within:[&>button]:flex">
             <label className="text-small">Password</label>
             <input
-              className="input-form-auth"
+              className={`input-form-auth ${resultResponse?.point === "password" ? "border-(--color-error-text)" : ""}`}
               type={isShowPassword ? "text" : "password"}
               minLength={8}
               maxLength={50}
+              onChange={(e) => setInputPassword(e.target.value)}
+              value={inputPassword}
               required
             />
             <button type="button">
@@ -51,8 +109,19 @@ function SignUpPage() {
                 onClick={() => setIsShowPassword(!isShowPassword)}
               />
             </button>
+            {resultResponse?.point === "password" && (
+              <span className="text-caption text-(--color-error-text)">
+                {resultResponse.msg}
+              </span>
+            )}
           </div>
-          <button className="btn-form-auth">Create account</button>
+          <button
+            className={isPending ? "btn-form-auth-not-allow" : "btn-form-auth"}
+            disabled={isPending}
+          >
+            {isPending && <SipnnerLoad />}
+            {!isPending && "Create account"}
+          </button>
         </form>
         <div className="flex items-center gap-3">
           <div className="h-px w-full bg-(--color-background-inverse)"></div>
