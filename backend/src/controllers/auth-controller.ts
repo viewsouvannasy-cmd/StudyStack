@@ -123,7 +123,7 @@ const verifyOtp = async (
     if (payload.user_name !== user_name || !compareOtp) {
       return res
         .status(401)
-        .json({ ok: false, point: "opt", msg: "invalid otp" });
+        .json({ ok: false, point: "otp", msg: "invalid otp" });
     }
 
     const passwordHash = await bcryto.hash(user_password, 10);

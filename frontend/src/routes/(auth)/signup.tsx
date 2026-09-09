@@ -1,17 +1,20 @@
 // library
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
 
 // component
 import { Logo } from "../../components/logo/Logo";
 import { IconEye } from "../../components/icon/IconEye";
 import { SipnnerLoad } from "../../components/loading-state/SipnnerLoad";
 
+// context
+import useUserInputSignup from "../../context/useUserInputForm";
+
 // api
 import { useSignup } from "../../api/auth/auth";
 
+// type
 import type { ResponseStatus } from "../../types/auth-type";
 
 export const Route = createFileRoute("/(auth)/signup")({
@@ -21,12 +24,9 @@ export const Route = createFileRoute("/(auth)/signup")({
 function SignUpPage() {
   const navigate = useNavigate();
 
-  const [isShowPassword, setIsShowPassword] = useState(false);
+  const { info, changeUserInfoForm } = useUserInputSignup();
 
-  // form state
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputName, setInputName] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
   const [resultResponse, setResultReponse] = useState<ResponseStatus>();
 
@@ -36,9 +36,9 @@ function SignUpPage() {
     e.preventDefault();
     mutate(
       {
-        user_email: inputEmail,
-        user_name: inputName,
-        user_password: inputPassword,
+        user_email: info.user_email,
+        user_name: info.user_name,
+        user_password: info.user_password,
       },
       {
         onSuccess: () => {
@@ -53,6 +53,8 @@ function SignUpPage() {
     );
   };
 
+  console.log(info);
+
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center p-4">
       <div className="flex w-full max-w-90 flex-col gap-5">
@@ -66,8 +68,8 @@ function SignUpPage() {
             <input
               className={`input-form-auth ${resultResponse?.point === "email" ? "border-(--color-error-text)" : ""}`}
               type="email"
-              onChange={(e) => setInputEmail(e.target.value)}
-              value={inputEmail}
+              onChange={(e) => changeUserInfoForm("user_email", e.target.value)}
+              value={info.user_email}
               required
             />
             {resultResponse?.point === "email" && (
@@ -83,8 +85,8 @@ function SignUpPage() {
               type="text"
               minLength={3}
               maxLength={50}
-              onChange={(e) => setInputName(e.target.value)}
-              value={inputName}
+              onChange={(e) => changeUserInfoForm("user_name", e.target.value)}
+              value={info.user_name}
               required
             />
             {resultResponse?.point === "name" && (
@@ -100,8 +102,10 @@ function SignUpPage() {
               type={isShowPassword ? "text" : "password"}
               minLength={8}
               maxLength={50}
-              onChange={(e) => setInputPassword(e.target.value)}
-              value={inputPassword}
+              onChange={(e) =>
+                changeUserInfoForm("user_password", e.target.value)
+              }
+              value={info.user_password}
               required
             />
             <button type="button">
