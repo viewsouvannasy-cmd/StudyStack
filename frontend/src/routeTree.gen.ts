@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
+import { Route as authVerifyRouteImport } from './routes/(auth)/verify'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const authSignupRoute = authSignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authVerifyRoute = authVerifyRouteImport.update({
+  id: '/(auth)/verify',
+  path: '/verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
+  '/verify': typeof authVerifyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
+  '/verify': typeof authVerifyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/signup': typeof authSignupRoute
+  '/(auth)/verify': typeof authVerifyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup'
+  fullPaths: '/' | '/login' | '/signup' | '/verify'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup'
-  id: '__root__' | '/' | '/(auth)/login' | '/(auth)/signup'
+  to: '/' | '/login' | '/signup' | '/verify'
+  id: '__root__' | '/' | '/(auth)/login' | '/(auth)/signup' | '/(auth)/verify'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authLoginRoute: typeof authLoginRoute
   authSignupRoute: typeof authSignupRoute
+  authVerifyRoute: typeof authVerifyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authSignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/verify': {
+      id: '/(auth)/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof authVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authLoginRoute: authLoginRoute,
   authSignupRoute: authSignupRoute,
+  authVerifyRoute: authVerifyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

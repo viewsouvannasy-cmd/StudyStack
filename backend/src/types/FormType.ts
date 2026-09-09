@@ -4,6 +4,10 @@ export interface UserForm {
   user_password: string;
 }
 
+export interface UserFormOtp extends UserForm {
+  otp_code: string;
+}
+
 export interface ResponseForm {
   ok: boolean;
   point?: string;

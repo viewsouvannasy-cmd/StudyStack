@@ -1,6 +1,6 @@
 import dns from "dns/promises";
 
-function vaildateFormatEmail(email: string): boolean {
+function validateFormatEmail(email: string): boolean {
   const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return regexEmail.test(email);
 }
@@ -28,4 +28,4 @@ const validateDomainEamil = async (email: string): Promise<boolean> => {
   }
 };
 
-export { validateDomainEamil, vaildateFormatEmail };
+export { validateDomainEamil, validateFormatEmail };

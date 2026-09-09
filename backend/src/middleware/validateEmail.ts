@@ -5,13 +5,13 @@ import { sql } from "../config/database.js";
 // helper function
 import {
   validateDomainEamil,
-  vaildateFormatEmail,
+  validateFormatEmail,
 } from "../utils/validation.js";
 
 // type
 import type { UserForm } from "../types/FormType.js";
 
-const vaildateEmail = async (
+const validateEmail = async (
   req: Request<{}, {}, UserForm>,
   res: Response,
   next: NextFunction,
@@ -26,7 +26,7 @@ const vaildateEmail = async (
     }
 
     // check email format
-    if (!vaildateFormatEmail(user_email)) {
+    if (!validateFormatEmail(user_email)) {
       return res
         .status(400)
         .json({ ok: false, point: "email", msg: "invalid email" });
@@ -45,4 +45,4 @@ const vaildateEmail = async (
   }
 };
 
-export default vaildateEmail;
+export default validateEmail;
