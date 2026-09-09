@@ -3,13 +3,15 @@ import { Router } from "express";
 
 // middleware
 import checkLength from "../middleware/checkLength.js";
-import vaildateEmail from "../middleware/validateEmail.js";
+import validateEmail from "../middleware/validateEmail.js";
 
 // controller
 import { createAccount } from "../controllers/auth-controller.js";
+import { verifyOtp } from "../controllers/auth-controller.js";
 
-const router = Router();
+const route = Router();
 
-router.post("/signup", checkLength, vaildateEmail, createAccount);
+route.post("/signup", checkLength, validateEmail, createAccount);
+route.post("/verify-otp", checkLength, validateEmail, verifyOtp);
 
-export default router;
+export default route;

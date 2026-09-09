@@ -2,6 +2,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 // component
 import { Logo } from "../../components/logo/Logo";
@@ -18,6 +19,8 @@ export const Route = createFileRoute("/(auth)/signup")({
 });
 
 function SignUpPage() {
+  const navigate = useNavigate();
+
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   // form state
@@ -38,8 +41,8 @@ function SignUpPage() {
         user_password: inputPassword,
       },
       {
-        onSuccess: (response) => {
-          console.log(response);
+        onSuccess: () => {
+          navigate({ to: "/verify" });
         },
         onError: (error) => {
           if (error.response) {
@@ -49,8 +52,6 @@ function SignUpPage() {
       },
     );
   };
-
-  console.log(resultResponse);
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center p-4">
