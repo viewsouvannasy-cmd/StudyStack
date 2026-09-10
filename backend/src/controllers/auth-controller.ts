@@ -174,68 +174,15 @@ const handleLogin = async (
     // EON mean email or name
     const { user_EON, user_password } = req.body;
 
-    // if user use email with password to login
-    if (user_EON.includes("@")) {
-      // check email Format
-      if (!validateFormatEmail(user_EON)) {
-        return res
-          .status(400)
-          .json({ ok: false, point: "login", msg: "not found account" });
-      }
-
-      const findUser = await sql`
-      SELECT 
-      *
-      FROM users 
-      WHERE user_email = ${user_EON}
-      `;
-      if (findUser.length === 0) {
-        return res.status(400).json({
-          ok: false,
-          point: "login",
-          msg: "not found account",
-        });
-      }
-
-      // compare hash password
-      const comparePassword = await bcryto.compare(
-        user_password,
-        findUser[0].user_password,
-      );
-      if (!comparePassword) {
-        return res.status(400).json({
-          ok: false,
-          point: "login",
-          msg: "not found account",
-        });
-      }
-
-      const refreshToken = generateRefreshToken(findUser[0].user_id);
-      const refreshTokenHash = await bcryto.hash(refreshToken, 10);
-
-      await sql`
-        UPDATE users
-        SET refresh_token = ${refreshTokenHash}
-        WHERE user_id = ${findUser[0].user_id}
-        `;
-
-      res.cookie("ss_session", refreshToken, generateCookieRefresh());
-
-      return res
-        .status(202)
-        .json({ ok: true, point: "login", msg: "login success" });
-    }
-
-    // if user use name with password to login
     if (user_EON.length > 50) {
       return res
-        .status(400)
+        .status(401)
         .json({ ok: false, point: "login", msg: "not found account" });
     }
 
     if (user_EON.length < 3) {
       return res
-        .status(400)
+        .status(401)
         .json({ ok: false, point: "login", msg: "not found account" });
     }
 
@@ -246,7 +193,10 @@ const handleLogin = async (
     WHERE user_name = ${user_EON}
     `;
     if (findUser.length === 0) {
-      return res.status(400).json({
+      // protact timing attack
+      await bcryto.compare(user_password, getEnv("DUMMY_HASH"));
+
+      return res.status(401).json({
         ok: false,
         point: "login",
         msg: "not found account",
@@ -259,7 +209,7 @@ const handleLogin = async (
       findUser[0].user_password,
     );
     if (!comparePassword) {
-      return res.status(400).json({
+      return res.status(401).json({
         ok: false,
         point: "login",
         msg: "not found account",

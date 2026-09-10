@@ -50,8 +50,6 @@ function RouteComponent() {
     );
   }
 
-  console.log(resultResponse);
-
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center p-4">
       <div className="flex w-full max-w-90 flex-col gap-5">
@@ -99,7 +97,10 @@ function RouteComponent() {
             className={`flex-1 ${resultResponse?.point === "login" ? "mt-1" : "mt-5"}`}
           >
             {resultResponse?.point === "login" && (
-              <span className="text-caption text-(--color-error-text)">
+              <span
+                role="alert"
+                className="text-caption text-(--color-error-text)"
+              >
                 {resultResponse.msg}
               </span>
             )}
