@@ -1,9 +1,13 @@
 import { getEnv } from "./getEnv.js";
 import jwt from "jsonwebtoken";
 
-function generateOtpToken(user_name: string, otpHash: string) {
+function generateOtpToken(
+  user_name: string,
+  user_email: string,
+  otpHash: string,
+) {
   return jwt.sign(
-    { user_name, otp_hash: otpHash },
+    { user_name, user_email, otp_hash: otpHash },
     getEnv("OTP_TOKEN_SECRET"),
     {
       expiresIn: "5m",

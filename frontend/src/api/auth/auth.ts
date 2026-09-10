@@ -2,7 +2,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 // auth-func
-import { signup, verifyOtp } from "./auth-func";
+import { signup, verifyOtp, login } from "./auth-func";
 
 // type
 import type {
@@ -11,7 +11,7 @@ import type {
   ResponseOtp,
   authAcceptOtp,
 } from "../../types/auth-type";
-import type { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 const useSignup = () => {
   return useMutation<ResponseStatus, AxiosError<ResponseStatus>, authAccept>({
@@ -25,4 +25,14 @@ const useVerifyOpt = () => {
   });
 };
 
-export { useSignup, useVerifyOpt };
+const useLogin = () => {
+  return useMutation<
+    ResponseStatus,
+    AxiosError<ResponseStatus>,
+    { user_EON: string; user_password: string }
+  >({
+    mutationFn: login,
+  });
+};
+
+export { useSignup, useVerifyOpt, useLogin };

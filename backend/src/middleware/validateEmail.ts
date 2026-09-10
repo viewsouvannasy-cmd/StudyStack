@@ -1,12 +1,8 @@
 // library
 import { Request, Response, NextFunction } from "express";
-import { sql } from "../config/database.js";
 
 // helper function
-import {
-  validateDomainEamil,
-  validateFormatEmail,
-} from "../utils/validation.js";
+import { validateFormatEmail } from "../utils/validation.js";
 
 // type
 import type { UserForm } from "../types/FormType.js";
@@ -27,13 +23,6 @@ const validateEmail = async (
 
     // check email format
     if (!validateFormatEmail(user_email)) {
-      return res
-        .status(400)
-        .json({ ok: false, point: "email", msg: "invalid email" });
-    }
-
-    // check email domain
-    if (!validateDomainEamil(user_email)) {
       return res
         .status(400)
         .json({ ok: false, point: "email", msg: "invalid email" });
