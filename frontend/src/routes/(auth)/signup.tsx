@@ -53,7 +53,13 @@ function SignUpPage() {
     );
   };
 
-  console.log(info);
+  function removeHightLightError() {
+    setResultReponse({
+      ok: false,
+      point: "",
+      msg: "",
+    });
+  }
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center p-4">
@@ -66,10 +72,11 @@ function SignUpPage() {
           <div className="flex w-full flex-col gap-1">
             <label className="text-small">Email</label>
             <input
-              className={`input-form-auth ${resultResponse?.point === "email" ? "border-(--color-error-text)" : ""}`}
+              className={`input-form-auth ${resultResponse?.point === "email" ? "border-(--color-error-text) bg-(--color-error-background)" : ""}`}
               type="email"
               onChange={(e) => changeUserInfoForm("user_email", e.target.value)}
               value={info.user_email}
+              onFocus={removeHightLightError}
               required
             />
             {resultResponse?.point === "email" && (
@@ -81,12 +88,14 @@ function SignUpPage() {
           <div className="mt-3.5 flex w-full flex-col gap-1">
             <label className="text-small">Username</label>
             <input
-              className={`input-form-auth ${resultResponse?.point === "name" ? "border-(--color-error-text)" : ""}`}
+              className={`input-form-auth ${resultResponse?.point === "name" ? "border-(--color-error-text) bg-(--color-error-background)" : ""}`}
               type="text"
               minLength={3}
               maxLength={50}
               onChange={(e) => changeUserInfoForm("user_name", e.target.value)}
               value={info.user_name}
+              onFocus={removeHightLightError}
+
               required
             />
             {resultResponse?.point === "name" && (
@@ -95,16 +104,17 @@ function SignUpPage() {
               </span>
             )}
           </div>
-          <div className="relative mt-3.5 flex w-full flex-col gap-1 [&>button]:absolute [&>button]:top-[57%] [&>button]:right-3 [&>button]:hidden focus-within:[&>button]:flex">
+          <div className="relative mt-3.5 mb-5 flex w-full flex-col gap-1 [&>button]:absolute [&>button]:top-[57%] [&>button]:right-3 [&>button]:hidden focus-within:[&>button]:flex">
             <label className="text-small">Password</label>
             <input
-              className={`input-form-auth ${resultResponse?.point === "password" ? "border-(--color-error-text)" : ""}`}
+              className={`input-form-auth ${resultResponse?.point === "password" ? "border-(--color-error-text) bg-(--color-error-background)" : ""}`}
               type={isShowPassword ? "text" : "password"}
               minLength={8}
               maxLength={50}
               onChange={(e) =>
                 changeUserInfoForm("user_password", e.target.value)
               }
+              onFocus={removeHightLightError}
               value={info.user_password}
               required
             />

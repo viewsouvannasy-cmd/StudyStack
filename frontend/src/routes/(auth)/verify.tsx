@@ -1,6 +1,6 @@
 // library
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 // components
@@ -29,7 +29,7 @@ function RouteComponent() {
 
   const [resultResponse, setResultResponse] = useState<ResponseOtp>();
 
-  const { mutate, isPending } = useVerifyOpt();
+  const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOpt();
 
   function handleInputOtp(value: string) {
     if (isNaN(Number(value))) {
@@ -45,7 +45,7 @@ function RouteComponent() {
       return;
     }
 
-    mutate(
+    verifyOtp(
       {
         user_email: info.user_email,
         user_name: info.user_name,
@@ -64,6 +64,12 @@ function RouteComponent() {
       },
     );
   }
+
+  useEffect(() => {
+    if (!info.user_email) {
+      navigate({ to: "/" });
+    }
+  });
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center gap-4 p-4">
@@ -94,22 +100,12 @@ function RouteComponent() {
           )}
           <button
             type="submit"
-            className={`${isPending ? "btn-form-auth-not-allow" : "btn-form-auth"} w-full`}
+            className={`${isVerifying ? "btn-form-auth-not-allow" : "btn-form-auth"} w-full`}
           >
-            {isPending && <SipnnerLoad />}
-            {!isPending && "Verify"}
+            {isVerifying && <SipnnerLoad />}
+            {!isVerifying && "Verify"}
           </button>
         </div>
-
-        <span className="text-caption mt-4 text-(--color-text-secondary)">
-          Didn't receive code?{" "}
-          <button
-            type="button"
-            className="cursor-pointer text-(--color-primary)"
-          >
-            Resend OTP
-          </button>
-        </span>
       </form>
     </div>
   );

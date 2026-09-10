@@ -39,4 +39,20 @@ const verifyOtp = async ({
   return response.data;
 };
 
-export { signup, verifyOtp };
+const login = async ({
+  user_EON,
+  user_password,
+}: {
+  user_EON: string;
+  user_password: string;
+}): Promise<ResponseStatus> => {
+  const response = await axios.post(
+    `${getEnv("VITE_SERVER_HOST")}/api/auth/login`,
+    { user_EON, user_password },
+    { withCredentials: true },
+  );
+
+  return response.data;
+};
+
+export { signup, verifyOtp, login };

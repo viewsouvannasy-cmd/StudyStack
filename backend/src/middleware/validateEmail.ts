@@ -1,6 +1,5 @@
 // library
 import { Request, Response, NextFunction } from "express";
-import { sql } from "../config/database.js";
 
 // helper function
 import {
