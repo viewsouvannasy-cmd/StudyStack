@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 import { sql } from "../config/database.js";
 import crypto from "crypto";
-import passport from "passport";
+import passport from "../config/passport/google-login.js";
 
 // helper function
 import { generateRefreshToken } from "../utils/generateToken.js";
@@ -30,36 +30,50 @@ const redirectToGoogle = (req: Request, res: Response, next: NextFunction) => {
   })(req, res, next);
 };
 
-const googleLogin = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const receviceState = req.query.state;
-    const storeState = req.cookies.oauth_state;
+const googleLogin = (req: Request, res: Response, next: NextFunction) => {
+  passport.authenticate(
+    "google",
+    { session: false },
+    async (err: any, user: User | false, info: any) => {
+      try {
+        if (err) {
+          console.error("Google Auth Error:", err);
+          return res.redirect(`${getEnv("CLIENT_HOST")}/login`);
+        }
 
-    if (!receviceState || !storeState || receviceState !== storeState) {
-      res.clearCookie("oauth_state", generateCookieShortLive());
-      return res.status(403).json({ ok: false, msg: "invalid" });
-    }
+        if (!user) {
+          console.log("Google Auth Failed Info:", info);
+          return res.redirect(`${getEnv("CLIENT_HOST")}/login`);
+        }
 
-    res.clearCookie("oauth_state", generateCookieShortLive());
+        const receviceState = req.query.state;
+        const storeState = req.cookies.oauth_state;
 
-    const { user_id } = req.user as User;
+        if (!receviceState || !storeState || receviceState !== storeState) {
+          res.clearCookie("oauth_state", generateCookieShortLive());
+          return res.status(403).json({ ok: false, msg: "invalid" });
+        }
 
-    const refreshToken = generateRefreshToken(user_id);
+        res.clearCookie("oauth_state", generateCookieShortLive());
 
-    const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+        const refreshToken = generateRefreshToken(user.user_id);
 
-    await sql`
+        const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+
+        await sql`
         UPDATE users 
         SET refresh_token = ${refreshTokenHash}
-        WHERE user_id = ${user_id}
+        WHERE user_id = ${user.user_id}
         `;
 
-    res.cookie("ss_session", refreshToken, generateCookieRefresh());
+        res.cookie("ss_session", refreshToken, generateCookieRefresh());
 
-    res.redirect(`${getEnv("CLIENT_HOST")}/app/all`);
-  } catch (error) {
-    next(error);
-  }
+        res.redirect(`${getEnv("CLIENT_HOST")}/app/all`);
+      } catch (error) {
+        next(error);
+      }
+    },
+  )(req, res, next);
 };
 
 export { googleLogin, redirectToGoogle };
