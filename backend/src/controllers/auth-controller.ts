@@ -14,11 +14,10 @@ import {
   generateRefreshToken,
 } from "../utils/generateToken.js";
 import {
-  generateCookieOtp,
+  generateCookieShortLive,
   generateCookieRefresh,
 } from "../utils/generateCookie.js";
 import { getEnv } from "../utils/getEnv.js";
-import { validateFormatEmail } from "../utils/validation.js";
 
 // service
 import { sendMailOtp } from "../service/emailService.js";
@@ -26,7 +25,6 @@ import { sendMailOtp } from "../service/emailService.js";
 // type
 import type { UserForm, ResponseForm, UserFormOtp } from "../types/FormType.js";
 import type { JwtPayload } from "jsonwebtoken";
-import validateEmail from "../middleware/validateEmail.js";
 
 const createAccount = async (
   req: Request<{}, ResponseForm, UserForm>,
@@ -77,7 +75,7 @@ const createAccount = async (
     const otpHash = await bcryto.hash(otpCode, 10);
     const otpToken = generateOtpToken(user_name, user_email, otpHash);
 
-    res.cookie("ss_session_otp", otpToken, generateCookieOtp());
+    res.cookie("ss_session_otp", otpToken, generateCookieShortLive());
 
     res
       .status(202)

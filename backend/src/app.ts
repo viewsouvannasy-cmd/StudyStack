@@ -2,6 +2,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import passport from "passport";
 
 // middleware
 import errorHandle from "./middleware/errorHandler.js";
@@ -25,6 +26,7 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(passport.initialize());
 
 app.use("/api/auth", authRoute);
 app.use("/api/oauth", oauthRoute);
