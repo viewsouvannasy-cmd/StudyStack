@@ -9,6 +9,7 @@ import notFoundHandler from "./middleware/notFoundHandler.js";
 
 // routes
 import authRoute from "./routes/auth-route.js";
+import oauthRoute from "./routes/oauth-route.js";
 
 // helper function
 import { getEnv } from "./utils/getEnv.js";
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
+app.use("/api/oauth", oauthRoute);
 
 app.use(notFoundHandler);
 app.use(errorHandle);
