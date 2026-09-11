@@ -12,7 +12,7 @@ passport.use(
     {
       clientID: getEnv("GOOGLE_CLIENT_ID"),
       clientSecret: getEnv("GOOGLE_CLIENT_SECRET"),
-      callbackURL: "/api/oauth/google/callback",
+      callbackURL: `${getEnv("SERVER_HOST")}/api/oauth/google/callback`,
     },
     async (
       _accessToken: string,
