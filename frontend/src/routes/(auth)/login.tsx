@@ -10,6 +10,7 @@ import { SipnnerLoad } from "../../components/loading-state/SipnnerLoad";
 
 // api
 import { useLogin } from "../../api/auth/auth";
+import { googleLogin } from "../../api/oauth/oauth";
 
 // type
 import type { ResponseStatus } from "../../types/auth-type";
@@ -119,7 +120,12 @@ function RouteComponent() {
           <span className="text-[11px]">OR</span>
           <div className="h-px w-full bg-(--color-background-inverse)"></div>
         </div>
-        <button className="btn-resgiter-oauth" disabled={isPending}>
+        <button
+          type="button"
+          className="btn-resgiter-oauth"
+          onClick={googleLogin}
+          disabled={isPending}
+        >
           <img className="h-5 w-5" src="/google-icon.svg" />
           Continue with Google
         </button>

@@ -13,6 +13,7 @@ import useUserInputSignup from "../../context/useUserInputForm";
 
 // api
 import { useSignup } from "../../api/auth/auth";
+import { googleLogin } from "../../api/oauth/oauth";
 
 // type
 import type { ResponseStatus } from "../../types/auth-type";
@@ -143,7 +144,12 @@ function SignUpPage() {
           <span className="text-[11px]">OR</span>
           <div className="h-px w-full bg-(--color-background-inverse)"></div>
         </div>
-        <button type="submit" className="btn-resgiter-oauth">
+        <button
+          type="button"
+          className="btn-resgiter-oauth"
+          onClick={googleLogin}
+          disabled={isPending}
+        >
           <img className="h-5 w-5" src="/google-icon.svg" />
           Continue with Google
         </button>
