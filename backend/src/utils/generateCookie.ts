@@ -7,7 +7,7 @@ interface SetCookie {
   maxAge: number;
 }
 
-export function generateCookieOtp(): SetCookie {
+export function generateCookieShortLive(): SetCookie {
   return {
     httpOnly: true,
     sameSite: getEnv("NODE_ENV") === "production" ? "none" : "lax",

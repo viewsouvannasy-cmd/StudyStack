@@ -17,10 +17,15 @@ passport.use(
       done: (error: unknown, user?: any) => void,
     ) => {
       try {
+        const email = profile.emails?.[0]?.value ?? "";
+        if (!email) {
+          return done(new Error("Google profile did not provide an email"));
+        }
+
         const userData = {
           id: profile.id,
           name: profile.displayName,
-          email: profile.emails?.[0]?.value ?? "",
+          email,
           avatarUrl: profile.photos?.[0]?.value ?? "",
         };
 
