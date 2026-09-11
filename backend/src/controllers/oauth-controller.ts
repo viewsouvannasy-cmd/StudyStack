@@ -31,6 +31,16 @@ const redirectToGoogle = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const googleLogin = (req: Request, res: Response, next: NextFunction) => {
+  const receviceState = req.query.state;
+  const storeState = req.cookies.oauth_state;
+
+  if (!receviceState || !storeState || receviceState !== storeState) {
+    res.clearCookie("oauth_state", generateCookieShortLive());
+    return res.status(403).json({ ok: false, msg: "invalid" });
+  }
+
+  res.clearCookie("oauth_state", generateCookieShortLive());
+
   passport.authenticate(
     "google",
     { session: false },
@@ -45,16 +55,6 @@ const googleLogin = (req: Request, res: Response, next: NextFunction) => {
           console.log("Google Auth Failed Info:", info);
           return res.redirect(`${getEnv("CLIENT_HOST")}/login`);
         }
-
-        const receviceState = req.query.state;
-        const storeState = req.cookies.oauth_state;
-
-        if (!receviceState || !storeState || receviceState !== storeState) {
-          res.clearCookie("oauth_state", generateCookieShortLive());
-          return res.status(403).json({ ok: false, msg: "invalid" });
-        }
-
-        res.clearCookie("oauth_state", generateCookieShortLive());
 
         const refreshToken = generateRefreshToken(user.user_id);
 

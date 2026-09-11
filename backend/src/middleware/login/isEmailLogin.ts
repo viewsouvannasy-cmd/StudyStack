@@ -1,7 +1,7 @@
 // library
 import { Response, Request, NextFunction } from "express";
 import { sql } from "../../config/database.js";
-import bcryto from "bcrypt";
+import bcrypt from "bcrypt";
 
 // hepler function
 import { validateFormatEmail } from "../../utils/validation.js";
@@ -38,7 +38,7 @@ const isEmailLogin = async (
       `;
       if (findUser.length === 0) {
         // protact timing attack
-        await bcryto.compare(user_password, getEnv("DUMMY_HASH"));
+        await bcrypt.compare(user_password, getEnv("DUMMY_HASH"));
 
         return res.status(401).json({
           ok: false,
@@ -47,8 +47,16 @@ const isEmailLogin = async (
         });
       }
 
+      if (!findUser[0].user_password) {
+        return res.status(401).json({
+          ok: false,
+          point: "login",
+          msg: "not found account",
+        });
+      }
+
       // compare hash password
-      const comparePassword = await bcryto.compare(
+      const comparePassword = await bcrypt.compare(
         user_password,
         findUser[0].user_password,
       );
@@ -61,7 +69,7 @@ const isEmailLogin = async (
       }
 
       const refreshToken = generateRefreshToken(findUser[0].user_id);
-      const refreshTokenHash = await bcryto.hash(refreshToken, 10);
+      const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
 
       await sql`
         UPDATE users
