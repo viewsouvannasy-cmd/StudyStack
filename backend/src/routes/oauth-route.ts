@@ -1,6 +1,7 @@
 // library
 import { Router } from "express";
 import passport from "../config/passport/google-login.js";
+import { Request, Response, NextFunction } from "express";
 
 // controller
 import {
@@ -8,20 +9,10 @@ import {
   redirectToGoogle,
 } from "../controllers/oauth-controller.js";
 
-// helper function
-import { getEnv } from "../utils/getEnv.js";
-
 const route = Router();
 
 route.get("/google", redirectToGoogle);
 
-route.get(
-  "/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: `${getEnv("CLIENT_HOST")}/login`,
-    session: false,
-  }),
-  googleLogin,
-);
+route.get("/google/callback", googleLogin);
 
 export default route;
