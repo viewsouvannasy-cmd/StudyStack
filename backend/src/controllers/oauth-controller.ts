@@ -14,7 +14,7 @@ import {
 import { getEnv } from "../utils/getEnv.js";
 
 // type
-import type { User } from "../types/DataInfoType.js";
+import type { User } from "../types/Data.js";
 
 const redirectToGoogle = (req: Request, res: Response, next: NextFunction) => {
   const state = crypto.randomBytes(34).toString("hex");

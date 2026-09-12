@@ -3,7 +3,7 @@ import { sql } from "../config/database.js";
 import { Response, Request, NextFunction } from "express";
 
 // type
-import type { User } from "../types/DataInfoType.js";
+import type { User } from "../types/Data.js";
 
 const getUser = async (
   req: Request<{}, { user_id: number }>,
@@ -15,7 +15,12 @@ const getUser = async (
 
     const [user] = (await sql`
     SELECT 
-    * 
+    user_name,
+    user_email,
+    user_password,
+    profile_url,
+    create_at,
+    update_at
     FROM users 
     WHERE user_id = ${user_id}
     `) as [User];
@@ -24,7 +29,10 @@ const getUser = async (
       return res.status(404).json({ ok: false, msg: "user is not found" });
     }
 
-    res.status(202).json({ ok: true, result: user });
+    const isHavePassword = user.user_password ? true : false;
+    user.user_password = isHavePassword;
+
+    res.status(200).json({ ok: true, result: user });
   } catch (error) {
     next(error);
   }

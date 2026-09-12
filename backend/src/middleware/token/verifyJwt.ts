@@ -28,7 +28,23 @@ const verifyJwt = (req: Request, res: Response, next: NextFunction) => {
     };
     next();
   } catch (error) {
-    return res.status(401).json({ ok_verify_token: false, msg: "invalie" });
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({
+        ok_verify_token: false,
+        msg: "token expired",
+        code: "TOKEN_EXPIRED",
+      });
+    }
+
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({
+        ok_verify_token: false,
+        msg: "invalid token",
+        code: "TOKEN_INVALID",
+      });
+    }
+
+    return next(error);
   }
 };
 

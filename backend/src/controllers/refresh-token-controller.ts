@@ -9,7 +9,7 @@ import { getEnv } from "../utils/getEnv.js";
 import { generateAccessToken } from "../utils/generateToken.js";
 
 // type
-import type { User } from "../types/DataInfoType.js";
+import type { User } from "../types/Data.js";
 import type { JwtPayload } from "jsonwebtoken";
 
 const refreshToken = async (
@@ -34,10 +34,10 @@ const refreshToken = async (
 
     const [user] = (await sql`
     SELECT 
-    * 
+    refresh_token
     FROM users
     WHERE user_id = ${payload.user_id}
-    `) as [User];
+    `) as [{ refresh_token: string }];
     if (!user) {
       return res.status(401).json({ ok: false, msg: "invalid" });
     }
@@ -54,7 +54,7 @@ const refreshToken = async (
 
     const accessToken = generateAccessToken(payload.user_id);
 
-    res.status(202).json({ ok: false, accessToken });
+    res.status(200).json({ ok: true, accessToken });
   } catch (error) {
     next(error);
   }

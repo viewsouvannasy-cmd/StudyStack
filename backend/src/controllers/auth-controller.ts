@@ -78,7 +78,7 @@ const createAccount = async (
     res.cookie("ss_session_otp", otpToken, generateCookieShortLive());
 
     res
-      .status(202)
+      .status(200)
       .json({ ok: true, msg: "we have been send mail to your email" });
   } catch (error) {
     next(error);
@@ -157,7 +157,7 @@ const verifyOtp = async (
     // set cookie
     res.cookie("ss_session", refreshToken, generateCookieRefresh());
 
-    res.status(202).json({ ok: false, accessToken });
+    res.status(200).json({ ok: true, accessToken });
   } catch (error) {
     next(error);
   }
@@ -225,7 +225,7 @@ const handleLogin = async (
 
     res.cookie("ss_session", refreshToken, generateCookieRefresh());
 
-    return res.status(202).json({ ok: true, msg: "login success" });
+    return res.status(200).json({ ok: true, msg: "login success" });
   } catch (error) {
     next(error);
   }
