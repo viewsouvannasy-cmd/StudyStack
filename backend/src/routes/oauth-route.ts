@@ -1,7 +1,5 @@
 // library
 import { Router } from "express";
-import passport from "../config/passport/google-login.js";
-import { Request, Response, NextFunction } from "express";
 
 // controller
 import {
