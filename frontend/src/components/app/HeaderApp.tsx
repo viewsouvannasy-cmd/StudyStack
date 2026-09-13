@@ -1,22 +1,29 @@
+// library
 import { Link } from "@tanstack/react-router";
 
-export function HeaderApp() {
-  return (
-    <Link
-      to="/"
-      className="flex w-full max-w-[2000px] items-center justify-between p-4"
-    >
-      <div className="flex items-center gap-2.5">
-        <img className="h-7 w-7" src="/studystack_icon.svg" />
-        <p className="text-page-title font-medium sm:flex">StudyStack</p>
-      </div>
+// api
+import { useUser } from "../../api/user/user";
 
-      <div className="h-11 w-11 cursor-pointer overflow-hidden rounded-full border border-(--color-border-strong)">
+export function HeaderApp() {
+  const { data } = useUser();
+
+  return (
+    <div className="flex w-full max-w-[2000px] items-center justify-between p-4">
+      <Link
+        to="/"
+
+        className="flex items-center gap-2.5"
+      >
+        <img className="h-6 w-6" src="/studystack_icon.svg" />
+        <p className="text-logo font-medium sm:flex">StudyStack</p>
+      </Link>
+
+      <div className="h-10 w-10 cursor-pointer overflow-hidden rounded-full border border-(--color-border-strong)">
         <img
-          src="/image/user-base-profile.png"
+          src={data?.profile_url ?? "/image/user-base-profile.png"}
           className="h-full w-full object-cover"
         />
       </div>
-    </Link>
+    </div>
   );
 }
