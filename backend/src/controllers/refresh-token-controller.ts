@@ -9,7 +9,6 @@ import { getEnv } from "../utils/getEnv.js";
 import { generateAccessToken } from "../utils/generateToken.js";
 
 // type
-import type { User } from "../types/Data.js";
 import type { JwtPayload } from "jsonwebtoken";
 
 const refreshToken = async (

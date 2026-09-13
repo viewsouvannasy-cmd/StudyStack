@@ -17,6 +17,14 @@ const verifyJwt = (req: Request, res: Response, next: NextFunction) => {
 
   const token = authHeader.split(" ")[1];
 
+  if (!token || token === "null" || token === "undefined") {
+    return res.status(401).json({
+      ok_verify_token: false,
+      msg: "no token provided",
+      code: "TOKEN_MISSING",
+    });
+  }
+
   try {
     const payload = jwt.verify(
       token,
