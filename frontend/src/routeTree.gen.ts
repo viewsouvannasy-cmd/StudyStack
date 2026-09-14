@@ -14,6 +14,7 @@ import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authVerifyRouteImport } from './routes/(auth)/verify'
 import { Route as AppAllRouteImport } from './routes/app/all'
+import { Route as AppMyLearningRouteImport } from './routes/app/my-learning'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +41,11 @@ const AppAllRoute = AppAllRouteImport.update({
   path: '/app/all',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppMyLearningRoute = AppMyLearningRouteImport.update({
+  id: '/app/my-learning',
+  path: '/app/my-learning',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof authSignupRoute
   '/verify': typeof authVerifyRoute
   '/app/all': typeof AppAllRoute
+  '/app/my-learning': typeof AppMyLearningRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/signup': typeof authSignupRoute
   '/verify': typeof authVerifyRoute
   '/app/all': typeof AppAllRoute
+  '/app/my-learning': typeof AppMyLearningRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,12 +70,14 @@ export interface FileRoutesById {
   '/(auth)/signup': typeof authSignupRoute
   '/(auth)/verify': typeof authVerifyRoute
   '/app/all': typeof AppAllRoute
+  '/app/my-learning': typeof AppMyLearningRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/signup' | '/verify' | '/app/all'
+  fullPaths:
+    '/' | '/login' | '/signup' | '/verify' | '/app/all' | '/app/my-learning'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/signup' | '/verify' | '/app/all'
+  to: '/' | '/login' | '/signup' | '/verify' | '/app/all' | '/app/my-learning'
   id:
     | '__root__'
     | '/'
@@ -75,6 +85,7 @@ export interface FileRouteTypes {
     | '/(auth)/signup'
     | '/(auth)/verify'
     | '/app/all'
+    | '/app/my-learning'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,6 +94,7 @@ export interface RootRouteChildren {
   authSignupRoute: typeof authSignupRoute
   authVerifyRoute: typeof authVerifyRoute
   AppAllRoute: typeof AppAllRoute
+  AppMyLearningRoute: typeof AppMyLearningRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +134,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAllRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/my-learning': {
+      id: '/app/my-learning'
+      path: '/app/my-learning'
+      fullPath: '/app/my-learning'
+      preLoaderRoute: typeof AppMyLearningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -131,6 +150,7 @@ const rootRouteChildren: RootRouteChildren = {
   authSignupRoute: authSignupRoute,
   authVerifyRoute: authVerifyRoute,
   AppAllRoute: AppAllRoute,
+  AppMyLearningRoute: AppMyLearningRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

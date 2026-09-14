@@ -1,11 +1,11 @@
 // library
 import { createFileRoute } from "@tanstack/react-router";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // components
 import { Logo } from "../../components/logo/Logo";
-import { IconEye } from "../../components/icon/IconEye";
+import { IconEye } from "../../components/icon//icno-active/IconEye";
 import { SipnnerLoad } from "../../components/loading-state/SipnnerLoad";
 
 // api
@@ -50,6 +50,10 @@ function RouteComponent() {
       },
     );
   }
+
+  useEffect(() => {
+    document.title = "Login";
+  });
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center p-4">

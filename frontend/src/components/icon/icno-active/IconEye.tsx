@@ -1,5 +1,5 @@
 // type
-import type { IconEyeType } from "../../types/IconEye-type";
+import type { IconEyeType } from "../../../types/IconEye-type";
 
 export function IconEye({ isShowPassword, onClick }: IconEyeType) {
   return (

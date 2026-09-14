@@ -69,6 +69,7 @@ function RouteComponent() {
     if (!info.user_email) {
       navigate({ to: "/" });
     }
+    document.title = "Verify";
   });
 
   return (
