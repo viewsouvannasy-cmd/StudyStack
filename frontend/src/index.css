@@ -15,7 +15,7 @@
   --text-label: 13px;
   --text-caption: 12px;
 
-  --text-logo: 26px;
+  --text-logo: 24px;
 
   --text-reading-title: 24px;
   --text-reading-heading: 20px;
@@ -75,6 +75,9 @@
   --color-surface-subtle: #202020;
   --color-background-inverse: #ffffff;
 
+  /* Primary blue */
+  --color-primary-soft: #2c7aff;
+
   --color-text-primary: #ffffff;
   --color-text-secondary: #d4d4d4;
   --color-text-muted: #a3a3a3;
@@ -114,13 +117,21 @@ body {
   }
 }
 
+.theme-transitioning,
+.theme-transitioning * {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
 /* auth route */
 .input-form-auth {
   @apply text-small border p-2 focus:outline-(--color-primary);
 }
 
 .btn-form-auth {
-  @apply text-small flex cursor-pointer items-center justify-center bg-(--color-primary) p-2.5 text-(--color-text-inverse) transition-colors duration-200 hover:bg-(--color-primary-hover);
+  @apply text-small flex cursor-pointer items-center justify-center bg-(--color-primary) p-2.5 text-white transition-colors duration-200 hover:bg-(--color-primary-hover);
 }
 
 .btn-form-auth-not-allow {
@@ -128,5 +139,14 @@ body {
 }
 
 .btn-resgiter-oauth {
-  @apply text-small flex cursor-pointer items-center justify-center gap-2 rounded-full border border-(--color-border-strong) bg-(--color-background) p-3 text-(--color-text) hover:bg-(--color-info-background);
+  @apply text-small flex cursor-pointer items-center justify-center gap-2 rounded-full border border-(--color-border-strong) bg-(--color-background) p-3 text-(--color-text) hover:bg-(--color-primary-soft);
+}
+
+/* app */
+.btn-tab-selected {
+  @apply text-small cursor-pointer rounded-full border border-(--color-border-strong) bg-(--color-primary-soft) p-1.5 pr-4 pl-4;
+}
+
+.btn-tab-not-select {
+  @apply text-small cursor-pointer rounded-full p-1.5 pr-4 pl-4 transition-colors duration-100 hover:bg-(--color-border);
 }

@@ -1,11 +1,11 @@
 // library
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // component
 import { Logo } from "../../components/logo/Logo";
-import { IconEye } from "../../components/icon/IconEye";
+import { IconEye } from "../../components/icon//icno-active/IconEye";
 import { SipnnerLoad } from "../../components/loading-state/SipnnerLoad";
 
 // context
@@ -61,6 +61,10 @@ function SignUpPage() {
       msg: "",
     });
   }
+
+  useEffect(() => {
+    document.title = "Signup";
+  });
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center p-4">

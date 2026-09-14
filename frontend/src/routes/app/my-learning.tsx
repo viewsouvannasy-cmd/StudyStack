@@ -6,20 +6,20 @@ import { useEffect } from "react";
 import { HeaderApp } from "../../components/app/HeaderApp";
 import { TabSection } from "../../components/app/TabSection";
 
-export const Route = createFileRoute("/app/all")({
+export const Route = createFileRoute("/app/my-learning")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   useEffect(() => {
-    document.title = "StudyStack | all";
+    document.title = "StudyStack | My Learning";
   });
 
   return (
     <div className="flex w-dvw flex-col items-center">
       <HeaderApp />
 
-      <TabSection tab="all" />
+      <TabSection tab="my-learning" />
     </div>
   );
 }
