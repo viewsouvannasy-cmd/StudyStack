@@ -5,6 +5,7 @@ import { useEffect } from "react";
 // component
 import { HeaderApp } from "../../components/app/HeaderApp";
 import { TabSection } from "../../components/app/TabSection";
+import { DisplayItemSection } from "../../components/app/DisplayItemSection";
 
 export const Route = createFileRoute("/app/my-learning")({
   component: RouteComponent,
@@ -20,6 +21,7 @@ function RouteComponent() {
       <HeaderApp />
 
       <TabSection tab="my-learning" />
+      <DisplayItemSection tab="my-learning" title="My Learning" />
     </div>
   );
 }

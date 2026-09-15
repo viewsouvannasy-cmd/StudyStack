@@ -1,14 +1,10 @@
-interface GridIconProps {
-  size?: number;
-  color?: string;
-  strokeWidth?: number;
-}
+import type { IconStatic } from "../../../types/icon/icon-static";
 
 export function IconGrid({
   size = 24,
   color = "#000000",
   strokeWidth = 1.5,
-}: GridIconProps) {
+}: IconStatic) {
   const r = 1.2; // corner radius (relative units)
   return (
     <svg

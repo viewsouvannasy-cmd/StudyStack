@@ -1,14 +1,10 @@
-interface IconLineProps {
-  size?: number;
-  color?: string;
-  strokeWidth?: number;
-}
+import type { IconStatic } from "../../../types/icon/icon-static";
 
 export function IconLine({
   size = 24,
   color = "#000000",
   strokeWidth = 1.5,
-}: IconLineProps) {
+}: IconStatic) {
   return (
     <svg
       width={size}

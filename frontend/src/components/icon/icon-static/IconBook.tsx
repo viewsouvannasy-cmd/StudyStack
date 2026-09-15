@@ -1,9 +1,9 @@
 import type { IconStatic } from "../../../types/icon/icon-static";
 
-export function IconSearch({
+export function IconBook({
   size = 24,
   color = "#000",
-  strokeWidth = 3,
+  strokeWidth = 2.2,
 }: IconStatic) {
   return (
     <svg
@@ -17,8 +17,8 @@ export function IconSearch({
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <circle cx="20.5" cy="20.5" r="12.5" />
-      <line x1="30.636" y1="30.636" x2="40" y2="40" />
+      <path d="M 2 11 Q 14 5 24 11 L 24 41.5 Q 12 34.75 2 39 Z" />
+      <path d="M 46 11 Q 34 5 24 11 L 24 41.5 Q 36 34.75 46 39 Z" />
     </svg>
   );
 }
