@@ -4,6 +4,9 @@
   --font-ui: Inter, system-ui, sans-serif;
   --font-reading: "Source Serif 4", Georgia, serif;
 
+  /* breakpointer */
+  --breakpoint-sml: 400px;
+
   /* Mobile-first defaults */
   --text-display: 32px;
   --text-page-title: 26px;
@@ -84,8 +87,10 @@
   --color-text-inverse: #111111;
 
   --color-border: #333333;
-  --color-border-strong: #525252;
+  /* --color-border-strong: #525252; */
+  --color-border-strong: #363636;
 
+  --shadow-card: 0 2px 8px rgba(223, 223, 223, 0.06);
   --color-glass-background: rgba(26, 26, 26, 0.78);
   --color-glass-border: rgba(255, 255, 255, 0.12);
 }
@@ -144,9 +149,9 @@ body {
 
 /* app */
 .btn-tab-selected {
-  @apply text-small cursor-pointer rounded-full border border-(--color-border-strong) bg-(--color-primary-soft) p-1.5 pr-4 pl-4;
+  @apply sml:text-small text-caption cursor-pointer rounded-full border border-(--color-border-strong) bg-(--color-primary-soft) p-1.5 pr-4 pl-4;
 }
 
 .btn-tab-not-select {
-  @apply text-small cursor-pointer rounded-full p-1.5 pr-4 pl-4 transition-colors duration-100 hover:bg-(--color-border);
+  @apply sml:text-small text-caption cursor-pointer rounded-full p-1.5 pr-4 pl-4 transition-colors duration-100 hover:bg-(--color-border);
 }

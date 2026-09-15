@@ -1,9 +1,9 @@
 import type { IconStatic } from "../../../types/icon/icon-static";
 
-export function IconSearch({
+export function IconPlus({
   size = 24,
   color = "#000",
-  strokeWidth = 3,
+  strokeWidth = 4,
 }: IconStatic) {
   return (
     <svg
@@ -15,10 +15,9 @@ export function IconSearch({
       stroke={color}
       strokeWidth={strokeWidth}
       strokeLinecap="round"
-      strokeLinejoin="round"
     >
-      <circle cx="20.5" cy="20.5" r="12.5" />
-      <line x1="30.636" y1="30.636" x2="40" y2="40" />
+      <line x1="24" y1="9" x2="24" y2="39" />
+      <line x1="9" y1="24" x2="39" y2="24" />
     </svg>
   );
 }
