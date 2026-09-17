@@ -1,7 +1,11 @@
+// library
+import { useState } from "react";
+
 // components
 import { IconYouTube } from "../icon/icon-static/IconBrand";
 import { IconX } from "../icon/icon-static/IconX";
 import { IconFile } from "../icon/icon-static/IconFile";
+import { Switch } from "../button/Switch";
 
 // hook
 import useMediaQuery from "../../hook/useMediaQuery";
@@ -11,6 +15,11 @@ import useOpenPopup from "../../context/useOpenPopup";
 
 export function PopupAddSourse() {
   const { isOpen, handlerClosePopup, isAnimation } = useOpenPopup();
+
+  const [aiOptions, setAiOptions] = useState({
+    generateImage: true,
+    nameing: true,
+  });
 
   const media = useMediaQuery("(min-width: 640px)");
 
@@ -74,7 +83,14 @@ export function PopupAddSourse() {
                     source
                   </span>
                 </div>
-                <div>dekkd</div>
+                <Switch
+                  state={aiOptions.generateImage}
+                  onChange={() => {
+                    const update = { ...aiOptions };
+                    update.generateImage = !update.generateImage;
+                    setAiOptions(update);
+                  }}
+                />
               </div>
 
               <div className="mt-2 flex justify-between gap-3 border-b border-(--color-border-strong) pb-2">
@@ -84,7 +100,14 @@ export function PopupAddSourse() {
                     Turn your core source content to short clarity name
                   </span>
                 </div>
-                <div>dekkd</div>
+                <Switch
+                  state={aiOptions.nameing}
+                  onChange={() => {
+                    const update = { ...aiOptions };
+                    update.nameing = !update.nameing;
+                    setAiOptions(update);
+                  }}
+                />
               </div>
             </div>
 
