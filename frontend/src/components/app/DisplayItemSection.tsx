@@ -5,6 +5,7 @@ import { IconBook } from "../icon/icon-static/IconBook";
 
 // context
 import useTheme from "../../theme/useTheme";
+import useOpenPopup from "../../context/useOpenPopup";
 
 interface DisplayItemSectionProps {
   tab: string;
@@ -14,11 +15,16 @@ interface DisplayItemSectionProps {
 export function DisplayItemSection({ title }: DisplayItemSectionProps) {
   const { theme } = useTheme();
 
+  const { handleOpenPopup } = useOpenPopup();
+
   return (
     <div className="flex w-full max-w-300 flex-col gap-3 p-4">
       <h1 className="text-subsection">{title}</h1>
-      <div className="grid grid-cols-2 grid-rows-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
-        <div className="group relative flex min-h-53.5 w-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-md border border-(--color-border-strong) bg-(--color-background)">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+        <div
+          onClick={() => handleOpenPopup("add-soruse")}
+          className="group relative flex min-h-53.5 w-full cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-md border border-(--color-border-strong) bg-(--color-background)"
+        >
           <div className="relative z-10 overflow-hidden rounded-full bg-(--color-primary-soft) p-3 before:absolute before:right-0 before:bottom-0 before:left-0 before:-z-10 before:h-0 before:bg-amber-200 before:bg-linear-to-t before:from-(--color-primary-soft) before:to-(--color-primary) before:mask-[linear-gradient(to_top,black_85%,transparent_100%)] before:transition-[height] before:duration-200 before:ease-in-out group-hover:before:h-full">
             <IconPlus
               size={30}
@@ -75,11 +81,11 @@ export function DisplayItemSection({ title }: DisplayItemSectionProps) {
           </div>
         </div>
 
-        <div className="border"></div>
-        <div className="border"></div>
-        <div className="border"></div>
-        <div className="border"></div>
-        <div className="border"></div>
+        <div className="min-h-53.5 border"></div>
+        <div className="min-h-53.5 border"></div>
+        <div className="min-h-53.5 border"></div>
+        <div className="min-h-53.5 border"></div>
+        <div className="min-h-53.5 border"></div>
       </div>
     </div>
   );

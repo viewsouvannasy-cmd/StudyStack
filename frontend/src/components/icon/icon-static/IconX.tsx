@@ -1,9 +1,9 @@
 import type { Icon } from "../../../types/icon";
 
-export function IconSearch({
+export function IconX({
   size = 24,
   color = "#000",
-  strokeWidth = 3,
+  strokeWidth = 4,
   ...props
 }: Icon) {
   return (
@@ -16,11 +16,10 @@ export function IconSearch({
       stroke={color}
       strokeWidth={strokeWidth}
       strokeLinecap="round"
-      strokeLinejoin="round"
       {...props}
     >
-      <circle cx="20.5" cy="20.5" r="12.5" />
-      <line x1="30.636" y1="30.636" x2="40" y2="40" />
+      <line x1="12" y1="12" x2="36" y2="36" />
+      <line x1="36" y1="12" x2="12" y2="36" />
     </svg>
   );
 }
