@@ -25,5 +25,6 @@ export const handleAccessTokenError = async <T>(
     throw error;
   }
 
+  window.location.href = "/";
   throw error;
 };
