@@ -1,10 +1,9 @@
 // type
-import type { IconEyeType } from "../../../types/IconEye-type";
+import type { IconEyeType } from "../../../types/icon";
 
-export function IconEye({ isShowPassword, onClick }: IconEyeType) {
+export function IconEye({ isShowPassword, ...props }: IconEyeType) {
   return (
     <svg
-      onClick={onClick}
       className="cursor-pointer stroke-(--color-text-muted) transition-[stroke] duration-200 hover:stroke-(--color-background-inverse)"
       xmlns="http://www.w3.org/2000/svg"
       width="17"
@@ -15,7 +14,7 @@ export function IconEye({ isShowPassword, onClick }: IconEyeType) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      role="button"
+      {...props}
     >
       {!isShowPassword ? (
         <>

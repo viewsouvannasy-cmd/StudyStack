@@ -28,7 +28,8 @@ export function HeaderApp() {
       <div className="h-8.5 w-8.5 cursor-pointer overflow-hidden rounded-full border border-(--color-border-strong)">
         <img
           src={data?.profile_url ?? "/image/user-base-profile.png"}
-          className="h-full w-full object-cover"
+          alt="User profile"
+          referrerPolicy="no-referrer"
         />
       </div>
     </div>

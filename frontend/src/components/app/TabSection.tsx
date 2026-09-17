@@ -10,6 +10,7 @@ import { IconPlus } from "../icon/icon-static/IconPlus";
 // context
 import useFormatLearnItem from "../../context/useFormatLearnItem";
 import useTheme from "../../theme/useTheme";
+import useOpenPopup from "../../context/useOpenPopup";
 
 interface TabSectionProp {
   tab: string;
@@ -19,6 +20,8 @@ export function TabSection({ tab }: TabSectionProp) {
   const { format, selectFormat } = useFormatLearnItem();
 
   const { theme } = useTheme();
+
+  const { handleOpenPopup } = useOpenPopup();
 
   return (
     <div className="mt-3 flex w-full max-w-300 flex-col-reverse items-center justify-between gap-4 pr-4 pl-4 sm:flex-row">
@@ -81,7 +84,10 @@ export function TabSection({ tab }: TabSectionProp) {
             />
           </button>
         </div>
-        <button className="text-small flex cursor-pointer items-center rounded-md bg-(--color-background-inverse) p-1.75 pr-3 pl-3 font-medium text-(--color-text-inverse)">
+        <button
+          onClick={() => handleOpenPopup("add-soruse")}
+          className="text-small flex cursor-pointer items-center rounded-md bg-(--color-background-inverse) p-1.75 pr-3 pl-3 font-medium text-(--color-text-inverse)"
+        >
           <IconPlus
             size={15}
             color={theme === "light" ? "#fff" : "#000"}

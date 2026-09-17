@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 // component
 import { Logo } from "../../components/logo/Logo";
-import { IconEye } from "../../components/icon//icno-active/IconEye";
+import { IconEye } from "../../components/icon//icon-active/IconEye";
 import { SipnnerLoad } from "../../components/loading-state/SipnnerLoad";
 
 // context

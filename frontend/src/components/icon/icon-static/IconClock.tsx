@@ -1,10 +1,11 @@
-import type { IconStatic } from "../../../types/icon/icon-static";
+import type { Icon } from "../../../types/icon";
 
 export function IconClock({
   size = 24,
   color = "#000",
   strokeWidth = 1.5,
-}: IconStatic) {
+  ...props
+}: Icon) {
   return (
     <svg
       width={size}
@@ -13,6 +14,7 @@ export function IconClock({
       fill="none"
       stroke={color}
       strokeWidth={strokeWidth}
+      {...props}
     >
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v5l3 2" />

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { HeaderApp } from "../../components/app/HeaderApp";
 import { TabSection } from "../../components/app/TabSection";
 import { DisplayItemSection } from "../../components/app/DisplayItemSection";
+import { PopupAddSourse } from "../../components/popup/PopupAddSourse";
 
 export const Route = createFileRoute("/app/my-learning")({
   component: RouteComponent,
@@ -17,11 +18,15 @@ function RouteComponent() {
   });
 
   return (
-    <div className="flex w-dvw flex-col items-center">
-      <HeaderApp />
+    <>
+      <div className="flex w-dvw flex-col items-center">
+        <HeaderApp />
 
-      <TabSection tab="my-learning" />
-      <DisplayItemSection tab="my-learning" title="My Learning" />
-    </div>
+        <TabSection tab="my-learning" />
+        <DisplayItemSection tab="my-learning" title="My Learning" />
+      </div>
+
+      <PopupAddSourse />
+    </>
   );
 }

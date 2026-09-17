@@ -25,6 +25,15 @@
   --text-reading-large: 19px;
   --text-reading-body: 17px;
   --text-reading-small: 16px;
+
+  /* animation */
+  --animate-scale-up: scaleUp 0.1s ease-in-out forwards;
+  --animate-scale-down: scaleDown 0.1s ease-in-out forwards;
+  --animate-opacity-up: opacityUp 0.1s ease-in-out forwards;
+  --animate-opacity-down: opacityDown 0.1s ease-in-out forwards;
+
+  --animate-from-bottom: fromBottom 0.3s ease-in-out forwards;
+  --animate-to-bottom: toBottom 0.3s ease-in-out forwards;
 }
 
 :root {
@@ -154,4 +163,60 @@ body {
 
 .btn-tab-not-select {
   @apply sml:text-small text-caption cursor-pointer rounded-full p-1.5 pr-4 pl-4 transition-colors duration-100 hover:bg-(--color-border);
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleDown {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.5);
+  }
+}
+
+@keyframes opacityUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opacityDown {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes toBottom {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
 }

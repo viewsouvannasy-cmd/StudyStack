@@ -1,10 +1,11 @@
-import type { IconStatic } from "../../../types/icon/icon-static";
+import type { Icon } from "../../../types/icon";
 
 export function IconBook({
   size = 24,
   color = "#000",
   strokeWidth = 2.2,
-}: IconStatic) {
+  ...props
+}: Icon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,6 +17,7 @@ export function IconBook({
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
+      {...props}
     >
       <path d="M 2 11 Q 14 5 24 11 L 24 41.5 Q 12 34.75 2 39 Z" />
       <path d="M 46 11 Q 34 5 24 11 L 24 41.5 Q 36 34.75 46 39 Z" />

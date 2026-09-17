@@ -5,6 +5,7 @@ import { useEffect } from "react";
 // component
 import { HeaderApp } from "../../components/app/HeaderApp";
 import { TabSection } from "../../components/app/TabSection";
+import { PopupAddSourse } from "../../components/popup/PopupAddSourse";
 
 export const Route = createFileRoute("/app/all")({
   component: RouteComponent,
@@ -20,6 +21,8 @@ function RouteComponent() {
       <HeaderApp />
 
       <TabSection tab="all" />
+
+      <PopupAddSourse />
     </div>
   );
 }
