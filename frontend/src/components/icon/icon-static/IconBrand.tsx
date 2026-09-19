@@ -5,12 +5,13 @@ export function IconYouTube({
   h = "h-16",
   w = "w-16",
   z = "z-0",
+  r = "rounded-[20px]",
   strokeWidth = 3.5,
   ...props
 }: IconWithBg) {
   return (
     <div
-      className={`flex ${h} ${w} ${z} items-center justify-center rounded-[20px] bg-[#FFF0F2]`}
+      className={`flex ${h} ${w} ${z} ${r} items-center justify-center bg-[#FFF0F2]`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

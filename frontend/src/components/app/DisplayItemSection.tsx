@@ -19,7 +19,7 @@ export function DisplayItemSection({ title }: DisplayItemSectionProps) {
 
   return (
     <div className="flex w-full max-w-300 flex-col gap-3 p-4">
-      <h1 className="text-subsection">{title}</h1>
+      <h1 className="text-section">{title}</h1>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         <div
           onClick={() => handleOpenPopup("add-soruse")}
@@ -34,16 +34,13 @@ export function DisplayItemSection({ title }: DisplayItemSectionProps) {
           <p className="sml:text-body text-caption z-10">Create New Learning</p>
         </div>
 
-        <div className="flex cursor-pointer flex-col gap-2 rounded-md border border-(--color-border-strong) bg-(--color-surface-subtle) p-3 transition-shadow duration-200 hover:shadow-(--shadow-card)">
-          <div className="h-25 w-full overflow-hidden rounded">
-            <img
-              src="/linear_regression_course_thumbnail_final.png"
-              className="h-full w-full object-cover"
-            />
+        <div className="flex cursor-pointer flex-col gap-2 rounded-md border border-(--color-border-strong) bg-(--color-surface-muted) p-3 transition-shadow duration-200 hover:shadow-(--shadow-card)">
+          <div className="h-25 w-full overflow-hidden rounded border border-(--color-border-strong)">
+            <img src="/test-image.jpg" className="h-full w-full object-cover" />
           </div>
           <div className="flex flex-1 flex-col gap-1">
             <p className="sml:text-large-body text-body overflow-hidden font-medium text-ellipsis whitespace-nowrap">
-              Linear Regression
+              Introduce Supply and Demand
             </p>
             <div className="sml:flex-row flex flex-col gap-1.5">
               <div className="flex items-center gap-1 [&>svg]:hidden min-[430px]:[&>svg]:flex">
@@ -71,11 +68,11 @@ export function DisplayItemSection({ title }: DisplayItemSectionProps) {
             </div>
             <div className="flex items-center justify-start gap-1.5 overflow-hidden">
               <div className="text-caption rounded-full bg-purple-200 px-3.5 py-0.5 text-purple-600">
-                LLM
+                Stanford
               </div>
               <p className="text-caption">|</p>
-              <p className="text-small font-reading overflow-hidden text-ellipsis whitespace-nowrap">
-                Stanford
+              <p className="text-caption overflow-hidden text-ellipsis whitespace-nowrap text-(--color-text-secondary)">
+                18 / 01 / 2037
               </p>
             </div>
           </div>
