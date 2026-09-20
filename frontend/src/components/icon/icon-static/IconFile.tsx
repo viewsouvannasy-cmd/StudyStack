@@ -2,15 +2,19 @@ import type { IconWithBg } from "../../../types/icon";
 
 export function IconFile({
   size = 35,
-  h = "h-16",
-  w = "w-16",
+  bgSize = 16,
   strokeWidth = 4,
   z = "z-0",
   ...props
 }: IconWithBg) {
   return (
     <div
-      className={`flex ${h} ${w} ${z} items-center justify-center rounded-[20px] bg-[#eff6ff]`}
+      className={`flex ${z} items-center justify-center bg-[#eff6ff]`}
+      style={{
+        height: bgSize * 4,
+        width: bgSize * 4,
+        borderRadius: Math.floor((bgSize * 4) / 3),
+      }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

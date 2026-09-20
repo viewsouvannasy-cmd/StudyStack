@@ -6,13 +6,30 @@ import { useEffect } from "react";
 import { HeaderApp } from "../../components/app/HeaderApp";
 import { TabSection } from "../../components/app/TabSection";
 import { DisplayItemSection } from "../../components/app/DisplayItemSection";
-import { PopupAddSourse } from "../../components/popup/PopupAddSourse";
+import { PopupAddSource } from "../../components/popup/pop-add-source/PopupAddSource";
 
-export const Route = createFileRoute("/app/my-learning")({
+// context
+import useOpenPopup from "../../context/useOpenPopup";
+
+export const Route = createFileRoute("/app/notebook")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { isOpen } = useOpenPopup();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     document.title = "StudyStack | My Learning";
   });
@@ -23,10 +40,10 @@ function RouteComponent() {
         <HeaderApp />
 
         <TabSection tab="my-learning" />
-        <DisplayItemSection tab="my-learning" title="My Learning" />
+        <DisplayItemSection tab="my-learning" title="My Notebook" />
       </div>
 
-      <PopupAddSourse />
+      <PopupAddSource />
     </>
   );
 }

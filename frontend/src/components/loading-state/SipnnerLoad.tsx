@@ -1,5 +1,23 @@
-export function SipnnerLoad() {
+export function SipnnerLoad({
+  color = "#fff",
+  borderW = 2,
+  size = 4.5,
+}: {
+  color?: string;
+  borderW?: number;
+  size?: number;
+}) {
   return (
-    <div className="h-4.5 w-4.5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+    <div
+      className="animate-spin rounded-full"
+      style={{
+        borderColor: color,
+        borderTopColor: "transparent",
+        borderStyle: "solid",
+        borderWidth: borderW,
+        width: size * 4,
+        height: size * 4,
+      }}
+    />
   );
 }

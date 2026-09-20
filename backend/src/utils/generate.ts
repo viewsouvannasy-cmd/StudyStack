@@ -13,7 +13,7 @@ async function generateUniqueUsername(baseName: string): Promise<string> {
     `;
 
     if (existing.length === 0) {
-      return candidate; // เจอ username ที่ยังไม่มีคนใช้
+      return candidate;
     }
 
     suffix++;

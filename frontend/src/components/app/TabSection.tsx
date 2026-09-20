@@ -33,10 +33,10 @@ export function TabSection({ tab }: TabSectionProp) {
           All
         </Link>
         <Link
-          to="/app/my-learning"
+          to="/app/notebook"
           className={`${tab === "my-learning" ? "btn-tab-selected" : "btn-tab-not-select"} `}
         >
-          My Learning
+          Notebook
         </Link>
         <Link
           to="/app/recommend"
