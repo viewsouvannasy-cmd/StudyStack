@@ -21,7 +21,7 @@ const getUser = async (isRetry = false): Promise<User> => {
     );
     return response.data.result;
   } catch (error) {
-    return await handleAccessTokenError(error, isRetry, getUser);
+    return await handleAccessTokenError(error, isRetry, () => getUser(true));
   }
 };
 

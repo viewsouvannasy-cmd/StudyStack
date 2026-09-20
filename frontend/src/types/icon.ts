@@ -4,12 +4,10 @@ export interface Icon extends SVGProps<SVGSVGElement> {
   size?: number;
 }
 
-// h = height , w = width , z = z-index , r = rounded
+// bgSize 1 equal to 4px , z = z-index
 export interface IconWithBg extends Icon {
-  h?: string;
-  w?: string;
+  bgSize?: number;
   z?: string;
-  r?: string;
 }
 
 export interface IconEyeType extends Icon {

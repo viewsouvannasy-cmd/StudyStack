@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import { HeaderApp } from "../../components/app/HeaderApp";
 import { TabSection } from "../../components/app/TabSection";
 import { DisplayItemSection } from "../../components/app/DisplayItemSection";
-import { PopupAddSourse } from "../../components/popup/PopupAddSourse";
+import { PopupAddSource } from "../../components/popup/pop-add-source/PopupAddSource";
 
-export const Route = createFileRoute("/app/my-learning")({
+export const Route = createFileRoute("/app/notebook")({
   component: RouteComponent,
 });
 
@@ -23,10 +23,10 @@ function RouteComponent() {
         <HeaderApp />
 
         <TabSection tab="my-learning" />
-        <DisplayItemSection tab="my-learning" title="My Learning" />
+        <DisplayItemSection tab="my-learning" title="My Notebook" />
       </div>
 
-      <PopupAddSourse />
+      <PopupAddSource />
     </>
   );
 }

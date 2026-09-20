@@ -2,16 +2,19 @@ import type { IconWithBg } from "../../../types/icon";
 
 export function IconYouTube({
   size = 33,
-  h = "h-16",
-  w = "w-16",
+  bgSize = 16,
   z = "z-0",
-  r = "rounded-[20px]",
   strokeWidth = 3.5,
   ...props
 }: IconWithBg) {
   return (
     <div
-      className={`flex ${h} ${w} ${z} ${r} items-center justify-center bg-[#FFF0F2]`}
+      className={`flex ${z} items-center justify-center bg-[#FFF0F2]`}
+      style={{
+        height: bgSize * 4,
+        width: bgSize * 4,
+        borderRadius: Math.floor((bgSize * 4) / 3),
+      }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
