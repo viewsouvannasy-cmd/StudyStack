@@ -6,6 +6,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { HeaderApp } from "../../components/app/HeaderApp";
 import { TabSection } from "../../components/app/TabSection";
 
+// component
+import { PopupAddSource } from "../../components/popup/pop-add-source/PopupAddSource";
+
 // context
 import useOpenPopup from "../../context/useOpenPopup";
 
@@ -29,10 +32,14 @@ function RouteComponent() {
   }, [isOpen]);
 
   return (
-    <div className="flex w-dvw flex-col items-center">
-      <HeaderApp />
+    <>
+      <div className="flex w-dvw flex-col items-center">
+        <HeaderApp />
 
-      <TabSection tab="recommend" />
-    </div>
+        <TabSection tab="recommend" />
+      </div>
+
+      <PopupAddSource />
+    </>
   );
 }
