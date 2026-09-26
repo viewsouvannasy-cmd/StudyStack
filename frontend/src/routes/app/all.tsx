@@ -34,12 +34,14 @@ function RouteComponent() {
   }, []);
 
   return (
-    <div className="flex w-dvw flex-col items-center">
-      <HeaderApp />
+    <>
+      <div className="flex w-dvw flex-col items-center">
+        <HeaderApp />
 
-      <TabSection tab="all" />
+        <TabSection tab="all" />
+      </div>
 
       <PopupAddSource />
-    </div>
+    </>
   );
 }

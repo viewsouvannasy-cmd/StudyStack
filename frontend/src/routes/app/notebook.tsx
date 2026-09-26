@@ -5,7 +5,7 @@ import { useEffect } from "react";
 // component
 import { HeaderApp } from "../../components/app/HeaderApp";
 import { TabSection } from "../../components/app/TabSection";
-import { DisplayItemSection } from "../../components/app/DisplayItemSection";
+import { DisplayItemSection } from "../../components/app/listNotebookSection/ListNotebookSection";
 import { PopupAddSource } from "../../components/popup/pop-add-source/PopupAddSource";
 
 // context

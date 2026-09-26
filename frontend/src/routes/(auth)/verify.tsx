@@ -27,7 +27,7 @@ function RouteComponent() {
 
   const [inputOtp, setInputOtp] = useState("");
 
-  const [resultResponse, setResultResponse] = useState<ResponseOtp>();
+  const [errorResponse, setErrorResponse] = useState<ResponseOtp>();
 
   const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOpt();
 
@@ -58,7 +58,7 @@ function RouteComponent() {
         },
         onError: (error) => {
           if (error.response) {
-            setResultResponse(error.response.data);
+            setErrorResponse(error.response.data);
           }
         },
       },
@@ -77,14 +77,14 @@ function RouteComponent() {
       <Logo />
       <form
         onSubmit={handleSubmitOtp}
-        className="flex w-full max-w-80 flex-col items-center"
+        className="relative flex w-full max-w-80 flex-col items-center"
       >
         <h1 className="text-[20px] font-medium">Verify OTP</h1>
         <span className="text-small text-(--color-text-secondary)">
           Enter the otp code send to email
         </span>
         <input
-          className="mt-8 flex w-full justify-center border border-(--color-text-secondary) p-1 text-center text-[22px]"
+          className="mt-6 flex w-full justify-center border border-(--color-text-secondary) p-1 text-center text-[22px]"
           placeholder="XXXXXX"
           type="text"
           minLength={6}
@@ -93,20 +93,19 @@ function RouteComponent() {
           value={inputOtp}
           required
         />
-        <div className="relative w-full">
-          {resultResponse?.point === "otp" && (
-            <span className="text-caption absolute text-(--color-error-text)">
-              {resultResponse.msg}
-            </span>
-          )}
-          <button
-            type="submit"
-            className={`${isVerifying ? "btn-form-auth-not-allow" : "btn-form-auth"} w-full`}
-          >
-            {isVerifying && <SipnnerLoad />}
-            {!isVerifying && "Verify"}
-          </button>
-        </div>
+
+        <button
+          type="submit"
+          className={`${isVerifying ? "btn-form-auth-not-allow" : "btn-form-auth"} mt-3 w-full`}
+        >
+          {isVerifying && <SipnnerLoad />}
+          {!isVerifying && "Verify"}
+        </button>
+        {errorResponse?.point === "otp" && (
+          <span className="text-caption absolute -bottom-6 text-(--color-error-text)">
+            {errorResponse.msg}
+          </span>
+        )}
       </form>
     </div>
   );
