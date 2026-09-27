@@ -12,7 +12,7 @@ export function HeaderSection() {
 
   return (
     <div className="flex w-full max-w-[2000px] items-center justify-between p-4">
-      <FullLogo />
+      <FullLogo classIcon="w-8" classText="text-logo hidden sm:flex" />
       <div className="flex items-center gap-4">
         <button onClick={toggleTheme} className="text-(--color-text-primary)">
           {theme === "light" ? "dark" : "light"}

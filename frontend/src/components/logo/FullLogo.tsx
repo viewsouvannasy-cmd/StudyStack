@@ -1,16 +1,18 @@
 import { Link } from "@tanstack/react-router";
-import useTheme from "../../theme/useTheme";
 
-export function FullLogo() {
-  const { theme } = useTheme();
-
+export function FullLogo({
+  classIcon = "w-7",
+  classText = "text-logo",
+}: {
+  classIcon?: string;
+  classText?: string;
+}) {
   return (
     <Link to="/" className="flex items-center gap-2.5">
-      <img
-        className="h-6 w-6"
-        src={`/studystack_icon_${theme === "light" ? "dark" : "light"}.svg`}
-      />
-      <p className="text-logo hidden font-medium sm:flex">StudyStack</p>
+      <img className={classIcon} src="/studyframes-icon.svg" />
+      <p className={classText}>
+        Study<span className="text-(--color-primary)">frames</span>
+      </p>
     </Link>
   );
 }

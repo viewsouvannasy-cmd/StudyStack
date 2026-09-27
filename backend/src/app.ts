@@ -16,7 +16,7 @@ import { refreshToken } from "./controllers/refresh-token-controller.js";
 import authRoute from "./routes/auth-route.js";
 import oauthRoute from "./routes/oauth-route.js";
 import userRoute from "./routes/user-route.js";
-import notebookRoute from "./routes/notebook/notebook-route.js";
+import studyCardRoute from "./routes/study-card/study-card-route.js";
 
 // helper function
 import { getEnv } from "./utils/getEnv.js";
@@ -39,7 +39,7 @@ app.use("/api/oauth", oauthRoute);
 app.use("/api/refresh-token", refreshToken);
 
 app.use("/api/user", verifyJwt, userRoute);
-app.use("/api/notebook", verifyJwt, notebookRoute);
+app.use("/api/study-card", verifyJwt, studyCardRoute);
 
 app.use(notFoundHandler);
 app.use(errorHandle);

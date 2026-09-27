@@ -14,8 +14,8 @@ import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authVerifyRouteImport } from './routes/(auth)/verify'
 import { Route as AppAllRouteImport } from './routes/app/all'
-import { Route as AppNotebookRouteImport } from './routes/app/notebook'
 import { Route as AppRecommendRouteImport } from './routes/app/recommend'
+import { Route as AppStudyCardIndexRouteImport } from './routes/app/study-card/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -42,14 +42,14 @@ const AppAllRoute = AppAllRouteImport.update({
   path: '/app/all',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppNotebookRoute = AppNotebookRouteImport.update({
-  id: '/app/notebook',
-  path: '/app/notebook',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppRecommendRoute = AppRecommendRouteImport.update({
   id: '/app/recommend',
   path: '/app/recommend',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppStudyCardIndexRoute = AppStudyCardIndexRouteImport.update({
+  id: '/app/study-card/',
+  path: '/app/study-card/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -59,8 +59,8 @@ export interface FileRoutesByFullPath {
   '/signup': typeof authSignupRoute
   '/verify': typeof authVerifyRoute
   '/app/all': typeof AppAllRoute
-  '/app/notebook': typeof AppNotebookRoute
   '/app/recommend': typeof AppRecommendRoute
+  '/app/study-card/': typeof AppStudyCardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -68,8 +68,8 @@ export interface FileRoutesByTo {
   '/signup': typeof authSignupRoute
   '/verify': typeof authVerifyRoute
   '/app/all': typeof AppAllRoute
-  '/app/notebook': typeof AppNotebookRoute
   '/app/recommend': typeof AppRecommendRoute
+  '/app/study-card': typeof AppStudyCardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -78,8 +78,8 @@ export interface FileRoutesById {
   '/(auth)/signup': typeof authSignupRoute
   '/(auth)/verify': typeof authVerifyRoute
   '/app/all': typeof AppAllRoute
-  '/app/notebook': typeof AppNotebookRoute
   '/app/recommend': typeof AppRecommendRoute
+  '/app/study-card/': typeof AppStudyCardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -89,8 +89,8 @@ export interface FileRouteTypes {
     | '/signup'
     | '/verify'
     | '/app/all'
-    | '/app/notebook'
     | '/app/recommend'
+    | '/app/study-card/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,8 +98,8 @@ export interface FileRouteTypes {
     | '/signup'
     | '/verify'
     | '/app/all'
-    | '/app/notebook'
     | '/app/recommend'
+    | '/app/study-card'
   id:
     | '__root__'
     | '/'
@@ -107,8 +107,8 @@ export interface FileRouteTypes {
     | '/(auth)/signup'
     | '/(auth)/verify'
     | '/app/all'
-    | '/app/notebook'
     | '/app/recommend'
+    | '/app/study-card/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,8 +117,8 @@ export interface RootRouteChildren {
   authSignupRoute: typeof authSignupRoute
   authVerifyRoute: typeof authVerifyRoute
   AppAllRoute: typeof AppAllRoute
-  AppNotebookRoute: typeof AppNotebookRoute
   AppRecommendRoute: typeof AppRecommendRoute
+  AppStudyCardIndexRoute: typeof AppStudyCardIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -158,18 +158,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAllRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app/notebook': {
-      id: '/app/notebook'
-      path: '/app/notebook'
-      fullPath: '/app/notebook'
-      preLoaderRoute: typeof AppNotebookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/app/recommend': {
       id: '/app/recommend'
       path: '/app/recommend'
       fullPath: '/app/recommend'
       preLoaderRoute: typeof AppRecommendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/study-card/': {
+      id: '/app/study-card/'
+      path: '/app/study-card'
+      fullPath: '/app/study-card/'
+      preLoaderRoute: typeof AppStudyCardIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -181,8 +181,8 @@ const rootRouteChildren: RootRouteChildren = {
   authSignupRoute: authSignupRoute,
   authVerifyRoute: authVerifyRoute,
   AppAllRoute: AppAllRoute,
-  AppNotebookRoute: AppNotebookRoute,
   AppRecommendRoute: AppRecommendRoute,
+  AppStudyCardIndexRoute: AppStudyCardIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
