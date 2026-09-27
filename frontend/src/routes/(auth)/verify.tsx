@@ -74,7 +74,7 @@ function RouteComponent() {
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center gap-4 p-4">
-      <Logo />
+      <Logo className="w-10" />
       <form
         onSubmit={handleSubmitOtp}
         className="relative flex w-full max-w-80 flex-col items-center"

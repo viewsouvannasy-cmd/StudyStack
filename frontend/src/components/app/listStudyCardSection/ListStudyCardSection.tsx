@@ -1,17 +1,16 @@
 // components
 import { IconPlus } from "../../icon/icon-static/IconPlus";
-import { NotebookItem } from "./NotebookItem";
+import { StudyCardItem } from "./StudyCardItem";
 
 // context
 import useTheme from "../../../theme/useTheme";
 import useOpenPopup from "../../../context/useOpenPopup";
 
 interface DisplayItemSectionProps {
-  tab: string;
   title: string;
 }
 
-export function DisplayItemSection({ title }: DisplayItemSectionProps) {
+export function ListStudyCardSection({ title }: DisplayItemSectionProps) {
   const { theme } = useTheme();
 
   const { handleOpenPopup } = useOpenPopup();
@@ -33,7 +32,7 @@ export function DisplayItemSection({ title }: DisplayItemSectionProps) {
           <p className="sml:text-body text-caption z-10">Create New Learning</p>
         </div>
 
-        <NotebookItem />
+        <StudyCardItem />
 
         <div className="min-h-53.5 border"></div>
         <div className="min-h-53.5 border"></div>

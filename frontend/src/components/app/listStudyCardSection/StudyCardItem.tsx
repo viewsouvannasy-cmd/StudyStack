@@ -7,7 +7,7 @@ import { IconThreeDot } from "../../icon/icon-static/IconThreeDot";
 // context
 import useTheme from "../../../theme/useTheme";
 
-export function NotebookItem() {
+export function StudyCardItem() {
   const { theme } = useTheme();
   return (
     <div className="flex cursor-pointer flex-col gap-1 rounded-lg border border-(--color-border-strong) bg-(--color-surface-subtle) transition-shadow duration-200 hover:shadow-(--shadow-card)">

@@ -10,7 +10,7 @@ import {
   getVideoChapter,
 } from "../../utils/hanlderYouTubeVideo.js";
 
-const createNotebook = async (
+const createStudyCard = async (
   req: Request<{}, {}, { video_link: string }>,
   res: Response,
   next: NextFunction,
@@ -77,4 +77,4 @@ const createNotebook = async (
   }
 };
 
-export { createNotebook };
+export { createStudyCard };
