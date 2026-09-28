@@ -11,7 +11,7 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   useEffect(() => {
-    document.title = "StudyStack";
+    document.title = "Studyframes";
   });
 
   return (
