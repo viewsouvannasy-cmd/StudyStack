@@ -1,3 +1,4 @@
+import { channel } from "diagnostics_channel";
 // library
 import { YoutubeTranscript } from "youtube-transcript";
 import axios from "axios";
@@ -26,43 +27,29 @@ interface Chapter {
   title: string;
 }
 
-export const getVideoChapter = async (videoId: string) => {
-  try {
-    const res = await youtube.videos.list({
-      part: ["snippet"],
-      id: [videoId],
-    });
+interface ChapterMatchTranscript {
+  chapter: number;
+  time_second: number;
+  title: string;
+  transcript: string;
+}
 
-    const description = res.data.items?.[0]?.snippet?.description;
-    if (!description) {
-      return null;
-    }
+interface VideoDetail {
+  channel: string | null | undefined;
+  title: string | null | undefined;
+  video_url: string;
+  total_chapters: number;
+  total_length_seconds: number | undefined;
+  chapters: Chapter[] | null;
+}
 
-    const regex = /^(\d{1,2}:\d{2}(?::\d{2})?)\s+(.+)$/gm;
-    const chapters: Chapter[] = [];
-    let match;
-
-    while ((match = regex.exec(description)) !== null) {
-      const [, time, title] = match;
-      chapters.push({
-        time,
-        seconds: timeToSeconds(time),
-        title: title.trim(),
-      });
-    }
-
-    const isValid = chapters.length >= 3 && chapters[0].seconds === 0;
-
-    return isValid ? chapters : null;
-  } catch (error) {
-    console.log("Fail to get chapters", error);
-    return null;
-  }
-};
-
-function timeToSeconds(time: string): number {
-  const parts = time.split(":").map(Number);
-  return parts.reduce((acc, val) => acc * 60 + val, 0);
+interface VideoDetailWithTranscipt {
+  channel: string | null | undefined;
+  title: string | null | undefined;
+  video_url: string;
+  total_chapters: number;
+  total_length_seconds: number | undefined;
+  chapters: ChapterMatchTranscript[];
 }
 
 export function extractVideoId(input: string): string | null {
@@ -117,6 +104,59 @@ const productionTranscript = async (
   }
 };
 
+export const getVideoChapter = async (
+  videoId: string,
+  vidoe_url: string,
+): Promise<VideoDetail | null> => {
+  try {
+    const res = await youtube.videos.list({
+      part: ["snippet", "contentDetails"],
+      id: [videoId],
+    });
+
+    const description = res.data.items?.[0]?.snippet?.description;
+    if (!description) {
+      return null;
+    }
+
+    const regex = /^(\d{1,2}:\d{2}(?::\d{2})?)\s+(.+)$/gm;
+    const chapters: Chapter[] = [];
+    let match;
+
+    while ((match = regex.exec(description)) !== null) {
+      const [, time, title] = match;
+      chapters.push({
+        time,
+        seconds: timeToSeconds(time),
+        title: title.trim(),
+      });
+    }
+
+    const isValid = chapters.length >= 3 && chapters[0].seconds === 0;
+
+    const chapterAndDetail: VideoDetail = {
+      channel: res.data.items?.[0]?.snippet?.channelTitle,
+      title: res.data.items?.[0]?.snippet?.title,
+      video_url: vidoe_url,
+      total_chapters: chapters.length,
+      total_length_seconds: isoDurationToSeconds(
+        res.data.items?.[0]?.contentDetails?.duration,
+      ),
+      chapters: isValid ? chapters : null,
+    };
+
+    return chapterAndDetail;
+  } catch (error) {
+    console.log("Fail to get chapters", error);
+    return null;
+  }
+};
+
+function timeToSeconds(time: string): number {
+  const parts = time.split(":").map(Number);
+  return parts.reduce((acc, val) => acc * 60 + val, 0);
+}
+
 export const getTranscript = async (videoId: string) => {
   const result =
     getEnv("NODE_ENV") === "production"
@@ -128,21 +168,24 @@ export const getTranscript = async (videoId: string) => {
 
 export const matchChapterWithTranscript = async (
   transcript: TranscriptResponseDev[] | TranscriptResponseProduction[],
-  chapters: Chapter[],
+  videoDetail: VideoDetail,
 ) => {
-  const result: {
-    chapter: number;
-    time: string;
-    title: string;
-    transcript: string;
-  }[] = [];
+  const result: VideoDetailWithTranscipt = {
+    channel: videoDetail.channel,
+    title: videoDetail.title,
+    video_url: videoDetail.video_url,
+    total_chapters: videoDetail.total_chapters,
+    total_length_seconds: videoDetail.total_length_seconds,
+    chapters: [],
+  };
+
+  const chapters = videoDetail.chapters!;
 
   let transcriptIndex = 0;
-
   for (let i = 0; i < chapters.length; i++) {
-    result.push({
+    result.chapters.push({
       chapter: 1 + i,
-      time: chapters[i].time,
+      time_second: chapters[i].seconds,
       title: chapters[i].title,
       transcript: "",
     });
@@ -161,7 +204,7 @@ export const matchChapterWithTranscript = async (
         break;
       }
 
-      result[i].transcript += seg.text;
+      result.chapters[i].transcript += " " + seg.text;
     }
 
     transcriptIndex = j;
@@ -172,6 +215,7 @@ export const matchChapterWithTranscript = async (
   return result;
 };
 
+// help function
 function yieldToEventLoop() {
   return new Promise((resolve) => setImmediate(resolve));
 }
@@ -182,4 +226,19 @@ function getSegmentShape(
   return "offset" in item
     ? { text: item.text, start: item.offset / 1000, duration: item.duration }
     : { text: item.text, start: item.start, duration: item.duration };
+}
+
+function isoDurationToSeconds(iso: string | null | undefined) {
+  if (!iso) {
+    return;
+  }
+
+  const match = iso.match(/^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/);
+  if (!match) return 0;
+
+  const hours = Number(match[1] ?? 0);
+  const minutes = Number(match[2] ?? 0);
+  const seconds = Number(match[3] ?? 0);
+
+  return hours * 3600 + minutes * 60 + seconds;
 }
