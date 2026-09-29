@@ -49,6 +49,7 @@ interface VideoDetailWithTranscipt {
   video_url: string;
   total_chapters: number;
   total_length_seconds: number | undefined;
+  source_type: string;
   chapters: ChapterMatchTranscript[];
 }
 
@@ -176,6 +177,7 @@ export const matchChapterWithTranscript = async (
     video_url: videoDetail.video_url,
     total_chapters: videoDetail.total_chapters,
     total_length_seconds: videoDetail.total_length_seconds,
+    source_type: "",
     chapters: [],
   };
 
