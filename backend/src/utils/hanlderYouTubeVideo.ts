@@ -27,9 +27,9 @@ interface Chapter {
   title: string;
 }
 
-interface ChapterMatchTranscript {
+export interface ChapterMatchTranscript {
   chapter: number;
-  time_second: number;
+  start_second: number;
   title: string;
   transcript: string;
 }
@@ -37,19 +37,23 @@ interface ChapterMatchTranscript {
 interface VideoDetail {
   channel: string | null | undefined;
   title: string | null | undefined;
-  video_url: string;
   total_chapters: number;
   total_length_seconds: number | undefined;
+  video_thumbnail_url: string | null | undefined;
+  instructor: string | null;
+  license: string | null;
   chapters: Chapter[] | null;
 }
 
-interface VideoDetailWithTranscipt {
+export interface VideoFullDatail {
   channel: string | null | undefined;
   title: string | null | undefined;
-  video_url: string;
   total_chapters: number;
   total_length_seconds: number | undefined;
   source_type: string;
+  video_thumbnail_url: string | null | undefined;
+  instructor: string | null;
+  license: string | null;
   chapters: ChapterMatchTranscript[];
 }
 
@@ -107,7 +111,6 @@ const productionTranscript = async (
 
 export const getVideoChapter = async (
   videoId: string,
-  vidoe_url: string,
 ): Promise<VideoDetail | null> => {
   try {
     const res = await youtube.videos.list({
@@ -120,11 +123,19 @@ export const getVideoChapter = async (
       return null;
     }
 
-    const regex = /^(\d{1,2}:\d{2}(?::\d{2})?)\s+(.+)$/gm;
+    const instructorRegex =
+      /^\s*(?:instructors?|speakers?|presented by|taught by|lecturer)\s*[:\-–]\s*(.+?)\s*$/im;
+
+    const licenseRegex =
+      /^\s*(?:licen[sc]e|licensed under)\s*[:\-–]?\s*(.+?)\s*$/im;
+
+    const chapterRegex = /^(\d{1,2}:\d{2}(?::\d{2})?)\s+(.+)$/gm;
+
     const chapters: Chapter[] = [];
+
     let match;
 
-    while ((match = regex.exec(description)) !== null) {
+    while ((match = chapterRegex.exec(description)) !== null) {
       const [, time, title] = match;
       chapters.push({
         time,
@@ -138,11 +149,14 @@ export const getVideoChapter = async (
     const chapterAndDetail: VideoDetail = {
       channel: res.data.items?.[0]?.snippet?.channelTitle,
       title: res.data.items?.[0]?.snippet?.title,
-      video_url: vidoe_url,
       total_chapters: chapters.length,
       total_length_seconds: isoDurationToSeconds(
         res.data.items?.[0]?.contentDetails?.duration,
       ),
+      video_thumbnail_url:
+        res.data.items?.[0]?.snippet?.thumbnails?.standard?.url,
+      instructor: extract(description, instructorRegex),
+      license: extract(description, licenseRegex),
       chapters: isValid ? chapters : null,
     };
 
@@ -171,12 +185,14 @@ export const matchChapterWithTranscript = async (
   transcript: TranscriptResponseDev[] | TranscriptResponseProduction[],
   videoDetail: VideoDetail,
 ) => {
-  const result: VideoDetailWithTranscipt = {
+  const result: VideoFullDatail = {
     channel: videoDetail.channel,
     title: videoDetail.title,
-    video_url: videoDetail.video_url,
     total_chapters: videoDetail.total_chapters,
     total_length_seconds: videoDetail.total_length_seconds,
+    video_thumbnail_url: videoDetail.video_thumbnail_url,
+    instructor: videoDetail.instructor,
+    license: videoDetail.license,
     source_type: "",
     chapters: [],
   };
@@ -187,7 +203,7 @@ export const matchChapterWithTranscript = async (
   for (let i = 0; i < chapters.length; i++) {
     result.chapters.push({
       chapter: 1 + i,
-      time_second: chapters[i].seconds,
+      start_second: chapters[i].seconds,
       title: chapters[i].title,
       transcript: "",
     });
@@ -243,4 +259,13 @@ function isoDurationToSeconds(iso: string | null | undefined) {
   const seconds = Number(match[3] ?? 0);
 
   return hours * 3600 + minutes * 60 + seconds;
+}
+
+function extract(text: string, regex: RegExp): string | null {
+  const match = text.match(regex);
+  if (!match) return null;
+
+  const value = match[1].trim();
+
+  return value;
 }

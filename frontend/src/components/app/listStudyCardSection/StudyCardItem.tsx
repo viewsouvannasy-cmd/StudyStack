@@ -1,5 +1,5 @@
 // component
-import { VideoThumbnail } from "../../thumbnail/VideoThumbnail";
+import { IconPlay } from "../../icon/icon-static/IconPlay";
 import { IconThreeDot } from "../../icon/icon-static/IconThreeDot";
 
 // constands
@@ -22,12 +22,10 @@ export function StudyCardItem({ color }: StudyCardItemProps) {
       <div
         className="absolute -bottom-5 flex h-20 w-100 blur-lg"
         style={{ backgroundColor: pattern.blur }}
-      >
-        ii
-      </div>
+      ></div>
       <div className="z-1 flex flex-col gap-px p-2 sm:p-3">
         <div className="flex h-30 w-full items-center justify-center">
-          <VideoThumbnail
+          <IconPlay
             className="h-full w-full"
             size={40}
             color={pattern.stroke}

@@ -39,7 +39,7 @@ app.use("/api/oauth", oauthRoute);
 app.use("/api/refresh-token", refreshToken);
 
 app.use("/api/user", verifyJwt, userRoute);
-app.use("/api/study-card", studyCardRoute);
+app.use("/api/study-card", verifyJwt, studyCardRoute);
 
 app.use(notFoundHandler);
 app.use(errorHandle);
