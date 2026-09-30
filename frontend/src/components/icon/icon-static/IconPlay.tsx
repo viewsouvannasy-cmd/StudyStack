@@ -1,6 +1,6 @@
-import type { Icon } from "../../types/icon";
+import type { Icon } from "../../../types/icon";
 
-export function VideoThumbnail({ color, size = 22, strokeWidth = 5 }: Icon) {
+export function IconPlay({ color, size = 22, strokeWidth = 5 }: Icon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
