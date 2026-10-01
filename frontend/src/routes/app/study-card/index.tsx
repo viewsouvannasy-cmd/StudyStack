@@ -5,7 +5,7 @@ import { useEffect } from "react";
 // component
 import { HeaderApp } from "../../../components/app/HeaderApp";
 import { TabSection } from "../../../components/app/TabSection";
-import { ListStudyCardSection } from "../../../components/app/listStudyCardSection/ListStudyCardSection";
+import { ListStudyCardSection } from "../../../components/app/study-card/ListStudyCardSection";
 import { PopupAddSource } from "../../../components/popup/pop-add-source/PopupAddSource";
 
 // context

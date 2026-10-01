@@ -1,9 +1,7 @@
-import { sql } from "../../../config/database.js";
+import { sql } from "../../config/database.js";
 
-import type {
-  VideoFullDatail,
-  ChapterMatchTranscript,
-} from "../../../utils/hanlderYouTubeVideo.js";
+import type { VideoFullDatail } from "../../utils/hanlderYouTubeVideo.js";
+import type { StudyCard } from "../../types/Data.js";
 
 export const writePublicStudyCard = async (
   videoFullDatail: VideoFullDatail,
@@ -11,9 +9,10 @@ export const writePublicStudyCard = async (
   video_url: string,
 ) => {
   await sql`
-    INSERT INTO public_study_card_items (psci_id ,title, total_chapters, total_length_seconds, source_type, instructor, video_url, video_thumbnail_url, license, psci_type, is_reusable)
+    INSERT INTO public_study_card_items (psci_id , credit_source ,title, total_chapters, total_length_seconds, source_type, instructor, video_url, video_thumbnail_url, license, psci_type, is_reusable)
     VALUES (
     ${videoId},
+    ${videoFullDatail.channel},
     ${videoFullDatail.title},
     ${videoFullDatail.total_chapters},
     ${videoFullDatail.total_length_seconds},
@@ -38,7 +37,7 @@ export const writeStudyCard = async (
     INSERT INTO study_card_items (user_id, sci_name, color, psci_id)
     VALUES (
     ${user_id},
-    ${!card_name ? "Untitled" : card_name},
+    ${!card_name ? "Untitled Card" : card_name},
     ${color},
     ${videoId}
     )
@@ -60,7 +59,7 @@ export const writePublicChaptersAndUserChapters = async (
       ${videoId},
       ${videoFullDatail.chapters[i].title},
       ${videoFullDatail.chapters[i].start_second},
-      ${videoFullDatail.chapters[i].chapter},
+      ${i + 1},
       ${videoFullDatail.chapters[i].transcript}
       )
       RETURNING pc_id
@@ -89,4 +88,23 @@ export const writeUserChapter = async (
       )
       `;
   }
+};
+
+export const readUserStudyCard = async (user_id: number) => {
+  return (await sql`
+    SELECT 
+    sci.sci_id,
+    psci.credit_source,
+    sci.sci_name,
+    sci.color,
+    psci.title,
+    psci.total_chapters,
+    psci.total_length_seconds,
+    psci.video_thumbnail_url,
+    sci.create_at
+    FROM study_card_items AS sci 
+    INNER JOIN public_study_card_items AS psci 
+    ON sci.psci_id = psci.psci_id
+    WHERE user_id = ${user_id}
+    `) as StudyCard[];
 };

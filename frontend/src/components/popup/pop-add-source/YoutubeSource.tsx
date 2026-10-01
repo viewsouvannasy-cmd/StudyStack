@@ -13,24 +13,31 @@ import useOpenPopup from "../../../context/useOpenPopup";
 // helper function
 import useMediaQuery from "../../../hook/useMediaQuery";
 
+// constands
+import { STUDY_CARD_COLOR_PATTERNS } from "../../../constants/color";
+
 // api
-import { useCreateNotebook } from "../../../api/notebook/notebook";
+import { useCreateStudyCard } from "../../../api/study-card/study-card";
 
 // type
 import type { ResponseStatus } from "../../../types/auth-type";
 
 interface YoutubeSourceProps {
   setCurrentPage: (page: "default" | "video" | "file") => void;
+  inputStudyCardName: string;
 }
 
-export function YoutubeSource({ setCurrentPage }: YoutubeSourceProps) {
+export function YoutubeSource({
+  setCurrentPage,
+  inputStudyCardName,
+}: YoutubeSourceProps) {
   const [inputYoutubeLink, setInputYoutubeLink] = useState<string>("");
 
   const { theme } = useTheme();
 
   const [responseError, setResponseError] = useState<ResponseStatus>();
 
-  const { mutate, isPending } = useCreateNotebook();
+  const { mutate, isPending } = useCreateStudyCard();
 
   const { handlerClosePopup } = useOpenPopup();
 
@@ -45,11 +52,18 @@ export function YoutubeSource({ setCurrentPage }: YoutubeSourceProps) {
 
   const handlerCreateNotebook = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const colorArray = Object.keys(STUDY_CARD_COLOR_PATTERNS);
+
+    const randomColor =
+      colorArray[Math.floor(Math.random() * colorArray.length)];
+
     mutate(
       {
-        video_link: inputYoutubeLink,
+        card_name: inputStudyCardName,
+        color: randomColor,
+        video_url: inputYoutubeLink,
       },
-
       {
         onError: (error) => {
           const errResponse = error.response?.data;
