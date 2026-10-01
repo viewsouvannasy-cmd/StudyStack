@@ -17,6 +17,7 @@ export function PopupAddSource() {
   const [currrentPage, setCurrentPage] = useState<"default" | "video" | "file">(
     "default",
   );
+  const [inputStudyCardName, setInputStudyCardName] = useState("");
 
   const media = useMediaQuery("(min-width: 640px)");
 
@@ -29,12 +30,19 @@ export function PopupAddSource() {
       >
         {/* select way to create notebook */}
         {currrentPage === "default" && (
-          <SelectAddSourcePage setCurrentPage={setCurrentPage} />
+          <SelectAddSourcePage
+            setCurrentPage={setCurrentPage}
+            setInputStudyCardName={setInputStudyCardName}
+            inputStudyCardName={inputStudyCardName}
+          />
         )}
 
         {/* for youtube video */}
         {currrentPage === "video" && (
-          <YoutubeSource setCurrentPage={setCurrentPage} />
+          <YoutubeSource
+            setCurrentPage={setCurrentPage}
+            inputStudyCardName={inputStudyCardName}
+          />
         )}
 
         {/* for file */}

@@ -1,0 +1,61 @@
+import axios from "axios";
+import { getEnv } from "../../utils/getEnv";
+import { getAccessToken } from "../../token/access-token";
+import { handleAccessTokenError } from "../../utils/handleError";
+
+// type
+import type { ResponseStatus } from "../../types/auth-type";
+import type { StudyCard } from "../../types/Data";
+
+const createStudyCardWithYouTube = async (
+  isRetry = false,
+  {
+    card_name,
+    color,
+    video_url,
+  }: { card_name: string; color: string; video_url: string },
+): Promise<{ ok: boolean; results?: string }> => {
+  try {
+    const accessToken = getAccessToken();
+    const response = await axios.post(
+      `${getEnv("VITE_SERVER_HOST")}/api/study-card/create`,
+      {
+        card_name,
+        color,
+        video_url,
+      },
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+    );
+    return response.data;
+  } catch (error) {
+    if (
+      axios.isAxiosError<ResponseStatus>(error) &&
+      error.response &&
+      error.response.status !== 401
+    ) {
+      throw error;
+    }
+
+    return await handleAccessTokenError(error, isRetry, () =>
+      createStudyCardWithYouTube(true, { card_name, color, video_url }),
+    );
+  }
+};
+
+const getStudyCard = async (isRetry = false): Promise<StudyCard[]> => {
+  try {
+    const accessToken = getAccessToken();
+    const response = await axios.get(
+      `${getEnv("VITE_SERVER_HOST")}/api/study-card/get`,
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+    );
+
+    return response.data.results;
+  } catch (error) {
+    return await handleAccessTokenError(error, isRetry, () =>
+      getStudyCard(true),
+    );
+  }
+};
+
+export { createStudyCardWithYouTube, getStudyCard };

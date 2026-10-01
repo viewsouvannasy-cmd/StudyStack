@@ -16,6 +16,7 @@ import { Route as authVerifyRouteImport } from './routes/(auth)/verify'
 import { Route as AppAllRouteImport } from './routes/app/all'
 import { Route as AppRecommendRouteImport } from './routes/app/recommend'
 import { Route as AppStudyCardIndexRouteImport } from './routes/app/study-card/index'
+import { Route as AppStudyCardSci_idOverviewRouteImport } from './routes/app/study-card/$sci_id/overview'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,12 @@ const AppStudyCardIndexRoute = AppStudyCardIndexRouteImport.update({
   path: '/app/study-card/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppStudyCardSci_idOverviewRoute =
+  AppStudyCardSci_idOverviewRouteImport.update({
+    id: '/app/study-card/$sci_id/overview',
+    path: '/app/study-card/$sci_id/overview',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/app/all': typeof AppAllRoute
   '/app/recommend': typeof AppRecommendRoute
   '/app/study-card/': typeof AppStudyCardIndexRoute
+  '/app/study-card/$sci_id/overview': typeof AppStudyCardSci_idOverviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +78,7 @@ export interface FileRoutesByTo {
   '/app/all': typeof AppAllRoute
   '/app/recommend': typeof AppRecommendRoute
   '/app/study-card': typeof AppStudyCardIndexRoute
+  '/app/study-card/$sci_id/overview': typeof AppStudyCardSci_idOverviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +89,7 @@ export interface FileRoutesById {
   '/app/all': typeof AppAllRoute
   '/app/recommend': typeof AppRecommendRoute
   '/app/study-card/': typeof AppStudyCardIndexRoute
+  '/app/study-card/$sci_id/overview': typeof AppStudyCardSci_idOverviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +101,7 @@ export interface FileRouteTypes {
     | '/app/all'
     | '/app/recommend'
     | '/app/study-card/'
+    | '/app/study-card/$sci_id/overview'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +111,7 @@ export interface FileRouteTypes {
     | '/app/all'
     | '/app/recommend'
     | '/app/study-card'
+    | '/app/study-card/$sci_id/overview'
   id:
     | '__root__'
     | '/'
@@ -109,6 +121,7 @@ export interface FileRouteTypes {
     | '/app/all'
     | '/app/recommend'
     | '/app/study-card/'
+    | '/app/study-card/$sci_id/overview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +132,7 @@ export interface RootRouteChildren {
   AppAllRoute: typeof AppAllRoute
   AppRecommendRoute: typeof AppRecommendRoute
   AppStudyCardIndexRoute: typeof AppStudyCardIndexRoute
+  AppStudyCardSci_idOverviewRoute: typeof AppStudyCardSci_idOverviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppStudyCardIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/study-card/$sci_id/overview': {
+      id: '/app/study-card/$sci_id/overview'
+      path: '/app/study-card/$sci_id/overview'
+      fullPath: '/app/study-card/$sci_id/overview'
+      preLoaderRoute: typeof AppStudyCardSci_idOverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +204,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppAllRoute: AppAllRoute,
   AppRecommendRoute: AppRecommendRoute,
   AppStudyCardIndexRoute: AppStudyCardIndexRoute,
+  AppStudyCardSci_idOverviewRoute: AppStudyCardSci_idOverviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

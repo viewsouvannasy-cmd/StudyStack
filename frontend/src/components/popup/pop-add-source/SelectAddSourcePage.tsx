@@ -12,10 +12,14 @@ import useMediaQuery from "../../../hook/useMediaQuery";
 
 interface SelectAddSourcePageProps {
   setCurrentPage: (page: "default" | "video" | "file") => void;
+  setInputStudyCardName: (input: string) => void;
+  inputStudyCardName: string;
 }
 
 export function SelectAddSourcePage({
   setCurrentPage,
+  setInputStudyCardName,
+  inputStudyCardName,
 }: SelectAddSourcePageProps) {
   const { theme } = useTheme();
   const { handlerClosePopup } = useOpenPopup();
@@ -45,7 +49,11 @@ export function SelectAddSourcePage({
 
       <div className="flex flex-col items-center gap-2">
         <label className="text-body w-full">Name Your NoteBook</label>
-        <input className="text-small w-full border p-4 focus:outline-(--color-focus-ring)" />
+        <input
+          className="text-small w-full border p-4 focus:outline-(--color-focus-ring)"
+          onChange={(e) => setInputStudyCardName(e.target.value)}
+          value={inputStudyCardName}
+        />
       </div>
 
       <div className="flex border border-(--color-border-strong) sm:flex-1">

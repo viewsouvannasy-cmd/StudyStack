@@ -17,7 +17,7 @@ You analyze YouTube video transcripts
 Respond ONLY with valid JSON, no markdown and no extra text.
 Use exactly this shape:
 {
-"source_type": string,
+"source_type": string
 }
 
 SOURCE_TYPE:

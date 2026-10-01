@@ -1,4 +1,3 @@
-import { channel } from "diagnostics_channel";
 // library
 import { YoutubeTranscript } from "youtube-transcript";
 import axios from "axios";
@@ -57,6 +56,7 @@ export interface VideoFullDatail {
   chapters: ChapterMatchTranscript[];
 }
 
+// this function is use extreact video id
 export function extractVideoId(input: string): string | null {
   if (/^[\w-]{11}$/.test(input)) return input;
 
@@ -75,6 +75,7 @@ export function extractVideoId(input: string): string | null {
   return null;
 }
 
+// this function is use get transcript on dev
 const devTranscript = async (
   videoId: string,
   preferredLangs = ["en", "th"],
@@ -93,6 +94,7 @@ const devTranscript = async (
   return null;
 };
 
+// this function use get transcript on the production
 const productionTranscript = async (
   videoId: string,
 ): Promise<TranscriptResponseProduction[] | null> => {
@@ -109,6 +111,7 @@ const productionTranscript = async (
   }
 };
 
+// get chapter for the youtube video
 export const getVideoChapter = async (
   videoId: string,
 ): Promise<VideoDetail | null> => {
@@ -129,7 +132,8 @@ export const getVideoChapter = async (
     const licenseRegex =
       /^\s*(?:licen[sc]e|licensed under)\s*[:\-–]?\s*(.+?)\s*$/im;
 
-    const chapterRegex = /^(\d{1,2}:\d{2}(?::\d{2})?)\s+(.+)$/gm;
+    const chapterRegex =
+      /^[ \t]*(?:[-•*·▪●]\s*)?\[?(\d{1,2}:\d{2}(?::\d{2})?)\]?(?:\([^)\s]*\))?(?:[^\S\r\n]+|[^\S\r\n]*\r?\n\s*)[-–—]?\s*([^\r\n]+?)\s*$/gm;
 
     const chapters: Chapter[] = [];
 
@@ -172,6 +176,7 @@ function timeToSeconds(time: string): number {
   return parts.reduce((acc, val) => acc * 60 + val, 0);
 }
 
+// get transcript follow the state
 export const getTranscript = async (videoId: string) => {
   const result =
     getEnv("NODE_ENV") === "production"
@@ -181,6 +186,7 @@ export const getTranscript = async (videoId: string) => {
   return result;
 };
 
+// match transcript to it own chapters
 export const matchChapterWithTranscript = async (
   transcript: TranscriptResponseDev[] | TranscriptResponseProduction[],
   videoDetail: VideoDetail,
@@ -233,7 +239,8 @@ export const matchChapterWithTranscript = async (
   return result;
 };
 
-// help function
+// ----- help function ------
+
 function yieldToEventLoop() {
   return new Promise((resolve) => setImmediate(resolve));
 }

@@ -1,6 +1,6 @@
 // library
 import { Response, Request, NextFunction } from "express";
-import { sql } from "../../../config/database.js";
+import { sql } from "../../config/database.js";
 
 // query
 import {
@@ -8,19 +8,20 @@ import {
   writeStudyCard,
   writePublicChaptersAndUserChapters,
   writeUserChapter,
+  readUserStudyCard,
 } from "./sc-query.js";
 
 // helper function
-import { getEnv } from "../../../utils/getEnv.js";
+import { getEnv } from "../../utils/getEnv.js";
 import {
   extractVideoId,
   matchChapterWithTranscript,
   getTranscript,
   getVideoChapter,
-} from "../../../utils/hanlderYouTubeVideo.js";
+} from "../../utils/hanlderYouTubeVideo.js";
 
 // constants
-import { ANALYSIS_YOUTUBE_VIDEO } from ".././../../constants/system-prompt.js";
+import { ANALYSIS_YOUTUBE_VIDEO } from "../../constants/system-prompt.js";
 
 const createStudyCard = async (
   req: Request<
@@ -71,7 +72,7 @@ const createStudyCard = async (
       if (isUserAlreadyHave) {
         return res.status(400).json({
           ok: false,
-          point: "input-youtube-video",
+          point: "input-youtube-url",
           msg: "You are already have one",
         });
       }
@@ -122,9 +123,10 @@ const createStudyCard = async (
       .slice(0, 2)
       .map((item) => item.transcript)
       .join();
+
     // request to ai to get analysis the source type
     // ai will return be text  Json format
-    const response = await fetch(
+    const aiResponse = await fetch(
       "https://openrouter.ai/api/v1/chat/completions",
       {
         method: "POST",
@@ -136,19 +138,15 @@ const createStudyCard = async (
           model: "dots-studio/dots-3-note-preview:free",
           messages: [
             {
-              role: "system",
-              content: ANALYSIS_YOUTUBE_VIDEO,
-            },
-            {
               role: "user",
-              content: shortTranscript,
+              content: `${ANALYSIS_YOUTUBE_VIDEO}\n\n---\nTranscript:\n${shortTranscript}`,
             },
           ],
         }),
       },
     );
 
-    const resultResponse = await response.json();
+    const resultResponse = await aiResponse.json();
 
     // change text to exact JSON and parse it
     const raw: string = resultResponse.choices?.[0]?.message?.content ?? "";
@@ -185,4 +183,20 @@ const createStudyCard = async (
   }
 };
 
-export { createStudyCard };
+const getUserStudyCard = async (
+  req: Request<{}, {}, { user_id: number }>,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { user_id } = req.body;
+
+    const results = await readUserStudyCard(user_id);
+
+    res.status(200).json({ ok: true, results });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { createStudyCard, getUserStudyCard };

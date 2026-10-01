@@ -8,3 +8,15 @@ export interface User {
   create_at: Date;
   update_at: Date;
 }
+
+export interface StudyCard {
+  sci_id: number;
+  credit_source: string;
+  sci_name: string;
+  color: string;
+  title: string;
+  total_chapters: number;
+  total_length_seconds: number;
+  video_thumbnail_url: string;
+  create_at: Date;
+}
