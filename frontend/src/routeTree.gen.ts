@@ -16,7 +16,8 @@ import { Route as authVerifyRouteImport } from './routes/(auth)/verify'
 import { Route as AppAllRouteImport } from './routes/app/all'
 import { Route as AppRecommendRouteImport } from './routes/app/recommend'
 import { Route as AppStudyCardIndexRouteImport } from './routes/app/study-card/index'
-import { Route as AppStudyCardSci_idOverviewRouteImport } from './routes/app/study-card/$sci_id/overview'
+import { Route as AppStudyCardSci_idSectionIndexRouteImport } from './routes/app/study-card/$sci_id/$section/index'
+import { Route as AppStudyCardSci_idSectionQuizsIndexRouteImport } from './routes/app/study-card/$sci_id/$section/$quizs/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,10 +54,16 @@ const AppStudyCardIndexRoute = AppStudyCardIndexRouteImport.update({
   path: '/app/study-card/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppStudyCardSci_idOverviewRoute =
-  AppStudyCardSci_idOverviewRouteImport.update({
-    id: '/app/study-card/$sci_id/overview',
-    path: '/app/study-card/$sci_id/overview',
+const AppStudyCardSci_idSectionIndexRoute =
+  AppStudyCardSci_idSectionIndexRouteImport.update({
+    id: '/app/study-card/$sci_id/$section/',
+    path: '/app/study-card/$sci_id/$section/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AppStudyCardSci_idSectionQuizsIndexRoute =
+  AppStudyCardSci_idSectionQuizsIndexRouteImport.update({
+    id: '/app/study-card/$sci_id/$section/$quizs/',
+    path: '/app/study-card/$sci_id/$section/$quizs/',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -68,7 +75,8 @@ export interface FileRoutesByFullPath {
   '/app/all': typeof AppAllRoute
   '/app/recommend': typeof AppRecommendRoute
   '/app/study-card/': typeof AppStudyCardIndexRoute
-  '/app/study-card/$sci_id/overview': typeof AppStudyCardSci_idOverviewRoute
+  '/app/study-card/$sci_id/$section/': typeof AppStudyCardSci_idSectionIndexRoute
+  '/app/study-card/$sci_id/$section/$quizs/': typeof AppStudyCardSci_idSectionQuizsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,7 +86,8 @@ export interface FileRoutesByTo {
   '/app/all': typeof AppAllRoute
   '/app/recommend': typeof AppRecommendRoute
   '/app/study-card': typeof AppStudyCardIndexRoute
-  '/app/study-card/$sci_id/overview': typeof AppStudyCardSci_idOverviewRoute
+  '/app/study-card/$sci_id/$section': typeof AppStudyCardSci_idSectionIndexRoute
+  '/app/study-card/$sci_id/$section/$quizs': typeof AppStudyCardSci_idSectionQuizsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,7 +98,8 @@ export interface FileRoutesById {
   '/app/all': typeof AppAllRoute
   '/app/recommend': typeof AppRecommendRoute
   '/app/study-card/': typeof AppStudyCardIndexRoute
-  '/app/study-card/$sci_id/overview': typeof AppStudyCardSci_idOverviewRoute
+  '/app/study-card/$sci_id/$section/': typeof AppStudyCardSci_idSectionIndexRoute
+  '/app/study-card/$sci_id/$section/$quizs/': typeof AppStudyCardSci_idSectionQuizsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,7 +111,8 @@ export interface FileRouteTypes {
     | '/app/all'
     | '/app/recommend'
     | '/app/study-card/'
-    | '/app/study-card/$sci_id/overview'
+    | '/app/study-card/$sci_id/$section/'
+    | '/app/study-card/$sci_id/$section/$quizs/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,7 +122,8 @@ export interface FileRouteTypes {
     | '/app/all'
     | '/app/recommend'
     | '/app/study-card'
-    | '/app/study-card/$sci_id/overview'
+    | '/app/study-card/$sci_id/$section'
+    | '/app/study-card/$sci_id/$section/$quizs'
   id:
     | '__root__'
     | '/'
@@ -121,7 +133,8 @@ export interface FileRouteTypes {
     | '/app/all'
     | '/app/recommend'
     | '/app/study-card/'
-    | '/app/study-card/$sci_id/overview'
+    | '/app/study-card/$sci_id/$section/'
+    | '/app/study-card/$sci_id/$section/$quizs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,7 +145,8 @@ export interface RootRouteChildren {
   AppAllRoute: typeof AppAllRoute
   AppRecommendRoute: typeof AppRecommendRoute
   AppStudyCardIndexRoute: typeof AppStudyCardIndexRoute
-  AppStudyCardSci_idOverviewRoute: typeof AppStudyCardSci_idOverviewRoute
+  AppStudyCardSci_idSectionIndexRoute: typeof AppStudyCardSci_idSectionIndexRoute
+  AppStudyCardSci_idSectionQuizsIndexRoute: typeof AppStudyCardSci_idSectionQuizsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -186,11 +200,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppStudyCardIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app/study-card/$sci_id/overview': {
-      id: '/app/study-card/$sci_id/overview'
-      path: '/app/study-card/$sci_id/overview'
-      fullPath: '/app/study-card/$sci_id/overview'
-      preLoaderRoute: typeof AppStudyCardSci_idOverviewRouteImport
+    '/app/study-card/$sci_id/$section/': {
+      id: '/app/study-card/$sci_id/$section/'
+      path: '/app/study-card/$sci_id/$section'
+      fullPath: '/app/study-card/$sci_id/$section/'
+      preLoaderRoute: typeof AppStudyCardSci_idSectionIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/study-card/$sci_id/$section/$quizs/': {
+      id: '/app/study-card/$sci_id/$section/$quizs/'
+      path: '/app/study-card/$sci_id/$section/$quizs'
+      fullPath: '/app/study-card/$sci_id/$section/$quizs/'
+      preLoaderRoute: typeof AppStudyCardSci_idSectionQuizsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -204,7 +225,9 @@ const rootRouteChildren: RootRouteChildren = {
   AppAllRoute: AppAllRoute,
   AppRecommendRoute: AppRecommendRoute,
   AppStudyCardIndexRoute: AppStudyCardIndexRoute,
-  AppStudyCardSci_idOverviewRoute: AppStudyCardSci_idOverviewRoute,
+  AppStudyCardSci_idSectionIndexRoute: AppStudyCardSci_idSectionIndexRoute,
+  AppStudyCardSci_idSectionQuizsIndexRoute:
+    AppStudyCardSci_idSectionQuizsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

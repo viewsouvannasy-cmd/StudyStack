@@ -5,7 +5,7 @@ import { handleAccessTokenError } from "../../utils/handleError";
 
 // type
 import type { ResponseStatus } from "../../types/auth-type";
-import type { StudyCard } from "../../types/Data";
+import type { StudyCard, StudyCardLesson } from "../../types/Data";
 
 const createStudyCardWithYouTube = async (
   isRetry = false,
@@ -42,20 +42,39 @@ const createStudyCardWithYouTube = async (
   }
 };
 
-const getStudyCard = async (isRetry = false): Promise<StudyCard[]> => {
+const getListStudyCard = async (isRetry = false): Promise<StudyCard[]> => {
   try {
     const accessToken = getAccessToken();
     const response = await axios.get(
-      `${getEnv("VITE_SERVER_HOST")}/api/study-card/get`,
+      `${getEnv("VITE_SERVER_HOST")}/api/study-card/get-list`,
       { headers: { Authorization: `Bearer ${accessToken}` } },
     );
 
     return response.data.results;
   } catch (error) {
     return await handleAccessTokenError(error, isRetry, () =>
-      getStudyCard(true),
+      getListStudyCard(true),
     );
   }
 };
 
-export { createStudyCardWithYouTube, getStudyCard };
+const getStudyCardLesson = async (
+  isRetry = false,
+  { sci_id }: { sci_id: number },
+): Promise<StudyCardLesson[]> => {
+  try {
+    const accessToken = getAccessToken();
+    const response = await axios.get(
+      `${getEnv("VITE_SERVER_HOST")}/api/study-card/get/${sci_id}`,
+      { headers: { Authorization: `Bearer ${accessToken}` } },
+    );
+
+    return response.data.results;
+  } catch (error) {
+    return await handleAccessTokenError(error, isRetry, () =>
+      getStudyCardLesson(true, { sci_id }),
+    );
+  }
+};
+
+export { createStudyCardWithYouTube, getListStudyCard, getStudyCardLesson };

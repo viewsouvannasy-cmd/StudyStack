@@ -2,7 +2,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "../../config/queryClient";
 
 // call func
-import { createStudyCardWithYouTube, getStudyCard } from "./study-card-func";
+import {
+  createStudyCardWithYouTube,
+  getListStudyCard,
+  getStudyCardLesson,
+} from "./study-card-func";
 
 // tyep
 import type { ResponseStatus } from "../../types/auth-type";
@@ -21,9 +25,17 @@ export const useCreateStudyCard = () => {
   });
 };
 
-export const useGetStudyCard = () => {
+export const useGetListStudyCard = () => {
   return useQuery({
     queryKey: ["study_card"],
-    queryFn: () => getStudyCard(),
+    queryFn: () => getListStudyCard(),
+  });
+};
+
+export const useGetStudyCardLesson = (sci_id: number) => {
+  return useQuery({
+    queryKey: ["study_card"],
+    queryFn: () => getStudyCardLesson(false, { sci_id }),
+    enabled: !!sci_id,
   });
 };

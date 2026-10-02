@@ -7,7 +7,7 @@ import useTheme from "../../../theme/useTheme";
 import useOpenPopup from "../../../context/useOpenPopup";
 
 // api
-import { useGetStudyCard } from "../../../api/study-card/study-card";
+import { useGetListStudyCard } from "../../../api/study-card/study-card";
 
 interface DisplayItemSectionProps {
   title: string;
@@ -18,7 +18,7 @@ export function ListStudyCardSection({ title }: DisplayItemSectionProps) {
 
   const { handleOpenPopup } = useOpenPopup();
 
-  const { data } = useGetStudyCard();
+  const { data } = useGetListStudyCard();
 
   return (
     <div className="flex w-full max-w-300 flex-col gap-3 p-4">
