@@ -9,6 +9,7 @@ import {
   writePublicChaptersAndUserChapters,
   writeUserChapter,
   readUserStudyCard,
+  readStudyCardLesson,
 } from "./sc-query.js";
 
 // helper function
@@ -22,6 +23,9 @@ import {
 
 // constants
 import { ANALYSIS_YOUTUBE_VIDEO } from "../../constants/system-prompt.js";
+
+// type
+import type { StudyCardLesson } from "../../types/Data.js";
 
 const createStudyCard = async (
   req: Request<
@@ -183,7 +187,7 @@ const createStudyCard = async (
   }
 };
 
-const getUserStudyCard = async (
+const getListStudyCard = async (
   req: Request<{}, {}, { user_id: number }>,
   res: Response,
   next: NextFunction,
@@ -199,4 +203,25 @@ const getUserStudyCard = async (
   }
 };
 
-export { createStudyCard, getUserStudyCard };
+const getStudyCardLesson = async (
+  req: Request<
+    { sci_id: string },
+    { ok: boolean; results: StudyCardLesson[] },
+    { user_id: string }
+  >,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { sci_id } = req.params;
+    const { user_id } = req.body;
+
+    const results = await readStudyCardLesson(sci_id, user_id);
+
+    res.status(200).json({ ok: true, results });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export { createStudyCard, getListStudyCard, getStudyCardLesson };
