@@ -10,8 +10,6 @@ export const Route = createFileRoute("/app/study-card/$sci_id/overview")({
 });
 
 function RouteComponent() {
-  const { sci_id } = Route.useParams();
-
   return (
     <div className="flex w-dvw flex-col items-center">
       <HeaderApp />
