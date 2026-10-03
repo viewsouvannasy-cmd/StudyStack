@@ -34,7 +34,7 @@ export const useGetListStudyCard = () => {
 
 export const useGetStudyCardLesson = (sci_id: number) => {
   return useQuery({
-    queryKey: ["study_card"],
+    queryKey: ["study_card_lesson"],
     queryFn: () => getStudyCardLesson(false, { sci_id }),
     enabled: !!sci_id,
   });
