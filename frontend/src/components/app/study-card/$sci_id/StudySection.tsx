@@ -1,26 +1,12 @@
-// library
-import { Resizable, type Enable } from "re-resizable";
-import { Link } from "@tanstack/react-router";
-
 // component
-import { IconArrow } from "../../../icon/icon-static/IconArrow";
+import { IconSideBar } from "../../../icon/icon-static/IconSideBar";
 
-// helper function
-import { formatDuration } from "../../../../utils/calculate";
+// main component
+import { TabHeader } from "./TabHeader";
+import { HeroSection } from "./HeroSection";
+import { CreditSourceSection } from "./CreditSourceSection";
 
-// api
-import { useGetStudyCardLesson } from "../../../../api/study-card/study-card";
-
-const enableChat: Enable = {
-  top: false,
-  right: false,
-  bottom: false,
-  left: true,
-  topRight: false,
-  bottomRight: false,
-  bottomLeft: false,
-  topLeft: false,
-};
+import { ListChapterSection } from "./ListChapterSection";
 
 interface StudySectionProps {
   sci_id: string;
@@ -28,57 +14,12 @@ interface StudySectionProps {
 }
 
 export function StudySection({ sci_id, section }: StudySectionProps) {
-  const { data } = useGetStudyCardLesson(Number(sci_id));
-
-  console.log(data);
-
   return (
-    <div className="flex w-full max-w-[2000px] justify-between gap-3 p-4">
-      <div className="flex-1 rounded-2xl border border-(--color-border-strong) shadow-md shadow-olive-300">
-        <div className="flex items-center justify-between border-b border-(--color-border-strong) p-1">
-          <div className="flex items-center gap-2">
-            <Link
-              to="/app/study-card"
-              className="primary-linear-gradient flex size-9 items-center justify-center rounded-full"
-            >
-              <IconArrow className="rotate-270" color="#fff" size={25} />
-            </Link>
+    <div className="mb-20 flex w-full max-w-[2000px] items-start justify-between gap-3 p-4">
+      <div className="min-w-0 flex-1 rounded-2xl border border-(--color-border-strong) shadow-md shadow-olive-300">
+        <TabHeader sci_id={sci_id} section={section} />
 
-            <Link
-              to="/app/study-card/$sci_id/$section"
-              params={{ sci_id: sci_id, section: "overview" }}
-              className={`text-small flex h-9 items-center rounded-full border border-(--color-border-strong) ${section === "overview" ? "bg-(--color-primary-soft)" : ""} px-3`}
-            >
-              Overview
-            </Link>
-
-            <div className="flex h-9 items-center gap-0.5 overflow-hidden rounded-full border border-(--color-border-strong)">
-              <Link
-                to="/app/study-card/$sci_id/$section"
-                params={{ sci_id: sci_id, section: "chapter-1" }}
-                className={`text-small flex h-full items-center rounded-r-md ${section.split("-").includes("chapter") ? "bg-(--color-primary-soft) px-3" : "px-1 pl-3"}`}
-              >
-                Chapter 1
-              </Link>
-              <span className="text-small">|</span>
-              <Link
-                to="/app/study-card/$sci_id/$section/$quizs"
-                params={{
-                  sci_id: sci_id,
-                  section: section === "overview" ? "chaprer-1" : section,
-                  quizs: "quizs",
-                }}
-                className={`text-small flex h-full items-center rounded-l-md ${section === "quizs" ? "bg-(--color-primary-soft) px-3" : "px-1 pr-3"}`}
-              >
-                Quizs
-              </Link>
-            </div>
-          </div>
-
-          <button className="text-small hidden md:flex"></button>
-        </div>
-
-        <div className="p-4">
+        <div className="flex flex-col gap-6 p-4">
           <div className="flex items-center justify-between">
             <span className="font-semibold">Overview</span>
             {/* <div className="flex items-center gap-2">
@@ -96,48 +37,34 @@ export function StudySection({ sci_id, section }: StudySectionProps) {
               </div>
             </div> */}
           </div>
-          <h1 className="mt-4 text-3xl font-semibold">{data?.[0].title}</h1>
 
-          <div className="mt-2.5 flex items-center justify-between border-y border-(--color-border-strong) py-4">
-            <div className="flex-1">
-              <p className="font-medium">{data?.[0].credit_source}</p>
-              <span className="text-small text-(--color-text-secondary)">
-                Channel
-              </span>
-            </div>
-            <div className="flex-1 border-l border-(--color-border-strong) pl-4">
-              <p className="font-medium">
-                {data ? formatDuration(data[0].total_length_seconds) : "N/A"}
-              </p>
-              <span className="text-small text-(--color-text-secondary)">
-                Video Length
-              </span>
-            </div>
-            <div className="flex-1 border-l border-(--color-border-strong) pl-4">
-              <p className="font-medium">{data?.[0].source_type}</p>
-              <span className="text-small text-(--color-text-secondary)">
-                Type
-              </span>
-            </div>
-            <div className="flex-1 border-l border-(--color-border-strong) pl-4">
-              <p className="font-medium">0</p>
-              <span className="text-small text-(--color-text-secondary)">
-                Quizs
-              </span>
-            </div>
+          <HeroSection sci_id={sci_id} />
+          <ListChapterSection sci_id={sci_id} />
+          <CreditSourceSection sci_id={sci_id} />
+
+          <div className="flex items-center justify-between">
+            <span className="text-caption text-(--color-text-secondary)">
+              Generate new quizs <br /> when you finish your current chapter
+            </span>
+            <button
+              type="submit"
+              className="group relative flex cursor-pointer justify-center justify-self-end overflow-hidden rounded-lg p-2 px-6 shadow-lg"
+            >
+              <span className="absolute inset-0 bg-linear-to-b from-(--color-primary) to-(--color-primary-soft)" />
+              <span className="absolute inset-0 bg-linear-to-b from-(--color-primary) from-[-50%] to-(--color-primary-soft) opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+              <span className="text-small relative">Start</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <Resizable
-        enable={enableChat}
-        defaultSize={{ width: "30%", height: "auto" }}
-        minWidth="20%"
-        maxWidth="40%"
-        className="shadow shadow-olive-500"
-      >
-        <div>chat</div>
-      </Resizable>
+      <div className="sticky top-4 h-140 w-[35%] rounded-2xl border border-(--color-border-strong) shadow-md shadow-olive-300">
+        <div className="border-b border-(--color-border-strong) p-1">
+          <button className="flex size-9 cursor-pointer items-center justify-center rounded-full border border-(--color-border-strong) transition-colors duration-200 hover:bg-(--color-primary-soft)">
+            <IconSideBar size={19} />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

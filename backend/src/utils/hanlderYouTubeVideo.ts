@@ -40,7 +40,7 @@ interface VideoDetail {
   total_length_seconds: number | undefined;
   video_thumbnail_url: string | null | undefined;
   instructor: string | null;
-  license: string | null;
+  license: string;
   chapters: Chapter[] | null;
 }
 
@@ -52,7 +52,7 @@ export interface VideoFullDatail {
   source_type: string;
   video_thumbnail_url: string | null | undefined;
   instructor: string | null;
-  license: string | null;
+  license: string;
   chapters: ChapterMatchTranscript[];
 }
 
@@ -160,7 +160,7 @@ export const getVideoChapter = async (
       video_thumbnail_url:
         res.data.items?.[0]?.snippet?.thumbnails?.standard?.url,
       instructor: extract(description, instructorRegex),
-      license: extract(description, licenseRegex),
+      license: extract(description, licenseRegex) ?? "Standard YouTube License",
       chapters: isValid ? chapters : null,
     };
 

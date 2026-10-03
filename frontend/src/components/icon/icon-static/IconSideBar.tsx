@@ -1,25 +1,27 @@
 import type { Icon } from "../../../types/icon";
 
-export function IconPlus({
-  size = 24,
+export function IconSideBar({
+  size = 22,
   color = "currentColor",
-  strokeWidth = 4,
+  strokeWidth = 2,
   ...props
 }: Icon) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 48 48"
       width={size}
       height={size}
+      viewBox="0 0 24 24"
       fill="none"
       stroke={color}
       strokeWidth={strokeWidth}
       strokeLinecap="round"
+      strokeLinejoin="round"
+
       {...props}
     >
-      <line x1="24" y1="9" x2="24" y2="39" />
-      <line x1="9" y1="24" x2="39" y2="24" />
+      <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" />
+      <path d="M9 4v16" />
     </svg>
   );
 }
