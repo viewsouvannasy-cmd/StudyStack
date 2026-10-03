@@ -28,8 +28,8 @@ export function StudyCardItem({ item }: StudyCardItemProps) {
       role="button"
       onClick={() => {
         navigate({
-          to: "/app/study-card/$sci_id/overview",
-          params: { sci_id: String(item.sci_id) },
+          to: "/app/study-card/$sci_id/$section",
+          params: { sci_id: String(item.sci_id), section: "overview" },
         });
       }}
       style={{

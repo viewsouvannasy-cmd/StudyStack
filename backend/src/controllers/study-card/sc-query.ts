@@ -1,7 +1,7 @@
 import { sql } from "../../config/database.js";
 
 import type { VideoFullDatail } from "../../utils/hanlderYouTubeVideo.js";
-import type { StudyCard } from "../../types/Data.js";
+import type { ListStudyCard, StudyCardLesson } from "../../types/Data.js";
 
 export const writePublicStudyCard = async (
   videoFullDatail: VideoFullDatail,
@@ -84,7 +84,7 @@ export const writeUserChapter = async (
       VALUES (
       ${studyCardItem.sci_id},
       ${chapters[i].pc_id},
-      ${i === 0 ? true : false}
+      ${false}
       )
       `;
   }
@@ -106,5 +106,36 @@ export const readUserStudyCard = async (user_id: number) => {
     INNER JOIN public_study_card_items AS psci 
     ON sci.psci_id = psci.psci_id
     WHERE user_id = ${user_id}
-    `) as StudyCard[];
+    `) as ListStudyCard[];
+};
+
+export const readStudyCardLesson = async (sci_id: string, user_id: string) => {
+  return (await sql`
+    SELECT
+    sci.sci_id,
+    psci.credit_source,
+    psci.title,
+    psci.total_chapters,
+    psci.total_length_seconds,
+    psci.source_type,
+    psci.instructor,
+    psci.video_url,
+    psci.video_thumbnail_url,
+    psci.license,
+    psci.psci_type,
+    c.chapter_id,
+    c.is_generated,
+    pc.pc_title,
+    pc.start_time,
+    pc.pc_number
+    FROM study_card_items as sci 
+    INNER JOIN public_study_card_items as psci 
+    ON sci.psci_id = psci.psci_id
+    INNER JOIN chapters as c
+    ON sci.sci_id = c.sci_id
+    INNER JOIN public_chapters as pc
+    ON c.pc_id = pc.pc_id
+    WHERE sci.sci_id = ${sci_id}
+    AND sci.user_id = ${user_id}
+    `) as StudyCardLesson[];
 };

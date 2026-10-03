@@ -80,14 +80,14 @@
   --shadow-floating: 0 12px 32px rgba(17, 17, 17, 0.12);
 }
 
-[data-theme="dark"] {
+/* [data-theme="dark"] {
   --color-background: #111111;
   --color-surface: #1a1a1a;
   --color-surface-muted: #242424;
   --color-surface-subtle: #202020;
   --color-background-inverse: #ffffff;
 
-  /* Primary blue */
+
   --color-primary-soft: #2c7aff;
 
   --color-text-primary: #ffffff;
@@ -96,13 +96,14 @@
   --color-text-inverse: #111111;
 
   --color-border: #333333;
-  /* --color-border-strong: #525252; */
+ 
   --color-border-strong: #363636;
 
   --shadow-card: 0 2px 8px rgba(223, 223, 223, 0.06);
   --color-glass-background: rgba(26, 26, 26, 0.78);
   --color-glass-border: rgba(255, 255, 255, 0.12);
-}
+} 
+*/
 
 *,
 *::after,
@@ -163,6 +164,10 @@ body {
 
 .btn-tab-not-select {
   @apply sml:text-small text-caption cursor-pointer rounded-full p-1.5 pr-4 pl-4 transition-colors duration-100 hover:bg-(--color-border);
+}
+
+.primary-linear-gradient {
+  @apply bg-linear-to-b from-(--color-primary) to-(--color-primary-soft);
 }
 
 @keyframes scaleUp {
